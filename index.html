@@ -225,32 +225,31 @@
             </section>
         </main>
     </div>
+<script type="module">
+        // 1. Importeer alle benodigde Firebase functies (inclusief inloggen en database) met versie 12.12.0
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-    <script type="module">
-        // Importeer Firebase functies via Google's servers
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
-        // === JOUW FIREBASE CONFIGURATIE ===
-        // VERVANG DIT BLOK DOOR JOUW CODE UIT FIREBASE!
+        // 2. Jouw web app's Firebase configuratie
         const firebaseConfig = {
-            apiKey: "JOUW_API_KEY_HIER",
-            authDomain: "jouw-project.firebaseapp.com",
-            projectId: "jouw-project",
-            storageBucket: "jouw-project.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
+            apiKey: "AIzaSyD8rkb6u4zVHQUBwKo0lfvhX17L5cz31I8", 
+            authDomain: "matteo-s-wijnkelder.firebaseapp.com",
+            projectId: "matteo-s-wijnkelder",
+            storageBucket: "matteo-s-wijnkelder.firebasestorage.app",
+            messagingSenderId: "800713019050",
+            appId: "1:800713019050:web:ec3721b135b7a56e1acad3",
+            measurementId: "G-M7DZ2P016W"
         };
 
-        // Initializeer Firebase
+        // 3. Initializeer Firebase, Auth en Firestore
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
         // Globale lijst voor de wijnen
         let wijnen = [];
-
+        
         // UI Elementen
         const loginSectie = document.getElementById('login-sectie');
         const appSectie = document.getElementById('app-sectie');
