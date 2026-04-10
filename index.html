@@ -373,7 +373,6 @@
                     <div class="stat-item"><div class="stat-number" id="stat-totaal">0</div><div class="stat-label">Flessen</div></div>
                     <div class="stat-item"><div class="stat-number" id="stat-rood">0</div><div class="stat-label">Rood</div></div>
                     <div class="stat-item"><div class="stat-number" id="stat-wit">0</div><div class="stat-label">Wit</div></div>
-                    <div class="stat-item"><div class="stat-number" id="stat-waarde">€0</div><div class="stat-label">Waarde</div></div>
                 </div>
                 <div class="controls">
                     <select id="filter-kleur">
@@ -433,6 +432,7 @@
                         </select>
                     </div>
                     <div class="form-section"><label>Jaartal</label><input type="number" id="invoer-jaartal" placeholder="Bijv. 2018"></div>
+                    <div class="form-section"><label>Aantal</label><input type="number" id="invoer-aantal" placeholder="Bijv. 1" min="1" value="1"></div>
                     <div class="form-section"><label>Prijs in €</label><input type="number" step="0.01" id="invoer-prijs" placeholder="Bijv. 25.50"></div>
                     <div class="form-section"><label>Op smaak vanaf jaar</label><input type="number" id="invoer-smaak" placeholder="Bijv. 2028"></div>
                     <button type="submit" class="btn-primary" id="opslaan-knop">Opslaan in Kelder</button>
@@ -591,11 +591,10 @@
     }
 
     function updateStats() {
-        document.getElementById('stat-totaal').textContent = wijnen.length;
-        document.getElementById('stat-rood').textContent = wijnen.filter(w => w.kleur === 'Rood').length;
-        document.getElementById('stat-wit').textContent = wijnen.filter(w => w.kleur === 'Wit').length;
-        const waarde = wijnen.reduce((sum, w) => sum + (w.prijs || 0), 0);
-        document.getElementById('stat-waarde').textContent = '€' + Math.round(waarde);
+        const totaalFlessen = wijnen.reduce((sum, w) => sum + (w.aantal || 1), 0);
+        document.getElementById('stat-totaal').textContent = totaalFlessen;
+        document.getElementById('stat-rood').textContent = wijnen.filter(w => w.kleur === 'Rood').reduce((s, w) => s + (w.aantal || 1), 0);
+        document.getElementById('stat-wit').textContent = wijnen.filter(w => w.kleur === 'Wit').reduce((s, w) => s + (w.aantal || 1), 0);
     }
 
     // ADD WINE
@@ -622,6 +621,7 @@
             naam: document.getElementById('invoer-naam').value || 'Onbekende Wijn',
             kleur: document.getElementById('invoer-kleur').value,
             jaartal: document.getElementById('invoer-jaartal').value,
+            aantal: parseInt(document.getElementById('invoer-aantal').value) || 1,
             prijs: parseFloat(document.getElementById('invoer-prijs').value) || 0,
             smaakVanaf: document.getElementById('invoer-smaak').value,
             fotoUrl: fotoUrl,
@@ -698,6 +698,7 @@
 
             const prijs = wijn.prijs > 0 ? `€${wijn.prijs.toFixed(2)}` : '—';
             const jaar = wijn.jaartal || '—';
+            const aantal = wijn.aantal || 1;
             const smaak = wijn.smaakVanaf ? `Op smaak: ${wijn.smaakVanaf}` : '';
 
             const fotoHtml = wijn.fotoUrl
@@ -713,6 +714,7 @@
                     <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
                     <div class="wijn-meta">
                         <span class="wijn-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>${jaar}</span>
+                        <span class="wijn-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 000 4h4v-4h-4z"/></svg>${aantal}×</span>
                         <span class="wijn-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>${prijs}</span>
                     </div>
                     ${smaak ? `<div class="wijn-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${smaak}</div>` : ''}
