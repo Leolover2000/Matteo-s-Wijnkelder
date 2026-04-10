@@ -26,35 +26,79 @@
         body {
             background-color: var(--steen-achtergrond);
             color: var(--text-licht);
-            /* Een subtiele stenen gradient */
             background-image: radial-gradient(circle, #2a2a2a 0%, #1a1a1a 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
 
-        /* Header (Hout) */
+        /* Inlogscherm Specifiek */
+        #login-sectie {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background-color: var(--steen-kaart);
+            padding: 30px;
+            border-radius: 8px;
+            border-top: 5px solid var(--hout-donker);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: var(--goud);
+            font-family: 'Georgia', serif;
+        }
+
+        .foutmelding {
+            color: #ff5252;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Hoofd App Structuur (Verborgen tot inlog) */
+        #app-sectie {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+        }
+
         header {
             background: linear-gradient(to bottom, var(--hout-donker), #2b1b18);
             color: white;
             text-align: center;
             padding: 20px;
-            font-family: 'Georgia', serif; /* Klassieker lettertype voor de titel */
+            font-family: 'Georgia', serif;
             border-bottom: 3px solid #1a110f;
             box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-            z-index: 10;
+            position: relative;
         }
 
-        header h1 {
-            font-size: 24px;
-            letter-spacing: 1px;
+        .uitlog-knop {
+            position: absolute;
+            right: 15px;
+            top: 20px;
+            background: none;
+            border: 1px solid var(--goud);
+            color: var(--goud);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        /* Navigatie Tabs (Hout) */
         nav {
             display: flex;
             background-color: var(--hout-licht);
-            border-bottom: 2px solid #3e2723;
         }
 
         nav button {
@@ -66,7 +110,6 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
         }
 
         nav button.actief {
@@ -75,209 +118,214 @@
             border-bottom: 3px solid var(--goud);
         }
 
-        /* Hoofdinhoud Container */
-        main {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* Schermen verbergen/tonen */
-        .scherm {
-            display: none;
-        }
-
-        .scherm.actief {
-            display: block;
-        }
-
-        /* Formulieren en Filters */
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        main { padding: 20px; overflow-y: auto; flex: 1;}
+        .scherm { display: none; }
+        .scherm.actief { display: block; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
 
         select, input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            background-color: var(--steen-kaart);
-            color: white;
-            border: 1px solid var(--hout-licht);
-            border-radius: 6px;
-            font-size: 16px;
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            background-color: var(--steen-kaart); color: white;
+            border: 1px solid var(--hout-licht); border-radius: 6px; font-size: 16px;
         }
 
-        select {
-            flex: 1;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--goud);
-            font-size: 14px;
-        }
+        label { display: block; margin-bottom: 5px; color: var(--goud); font-size: 14px; }
 
         .hoofd-knop {
             background: linear-gradient(to bottom, #795548, var(--hout-donker));
-            color: white;
-            border: 1px solid #1a110f;
-            padding: 15px;
-            width: 100%;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            margin-top: 10px;
+            color: white; border: 1px solid #1a110f; padding: 15px; width: 100%;
+            font-size: 18px; font-weight: bold; border-radius: 6px; cursor: pointer;
         }
 
-        /* Wijnkaarten (Steen) */
         .wijn-kaart {
-            background-color: var(--steen-kaart);
-            border-left: 5px solid var(--hout-licht);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            position: relative;
+            background-color: var(--steen-kaart); border-left: 5px solid var(--hout-licht);
+            border-radius: 8px; padding: 15px; margin-bottom: 15px; position: relative;
         }
-
-        .wijn-naam {
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 5px;
-        }
-
-        .wijn-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 14px;
-            color: #aaa;
-        }
-
-        .wijn-tag {
-            background-color: var(--hout-donker);
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: var(--text-accent);
-            font-size: 12px;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .verwijder-knop {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #ff5252;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .leeg-bericht {
-            text-align: center;
-            color: #888;
-            margin-top: 40px;
-            font-style: italic;
-        }
+        .wijn-naam { font-size: 20px; font-weight: bold; margin-bottom: 5px; }
+        .wijn-details { display: flex; flex-wrap: wrap; gap: 15px; font-size: 14px; color: #aaa; }
+        .wijn-tag { background-color: var(--hout-donker); padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-top: 10px; display: inline-block; }
+        .verwijder-knop { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #ff5252; font-size: 20px; cursor: pointer; }
+        
+        .laad-scherm { text-align: center; color: var(--goud); margin-top: 50px; font-style: italic; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Matteo's Wijnkelder</h1>
-    </header>
-
-    <nav>
-        <button id="tab-kelder" class="actief" onclick="wisselScherm('kelder')">Mijn Kelder</button>
-        <button id="tab-toevoegen" onclick="wisselScherm('toevoegen')">Fles Toevoegen</button>
-    </nav>
-
-    <main>
-        <section id="scherm-kelder" class="scherm actief">
-            <div class="controls">
-                <select id="filter-kleur" onchange="tekenWijnen()">
-                    <option value="Alle">Alle kleuren</option>
-                    <option value="Wit">Wit</option>
-                    <option value="Rood">Rood</option>
-                    <option value="Rosé">Rosé</option>
-                    <option value="Champagne">Champagne</option>
-                    <option value="Anders">Anders</option>
-                </select>
-                <select id="sorteer-optie" onchange="tekenWijnen()">
-                    <option value="nieuwste">Nieuwste eerst</option>
-                    <option value="prijs-hoog">Prijs (Hoog - Laag)</option>
-                    <option value="prijs-laag">Prijs (Laag - Hoog)</option>
-                    <option value="smaak-jaar">Op smaak (Eerstvolgende)</option>
-                </select>
-            </div>
-            
-            <div id="wijn-lijst">
-                </div>
-        </section>
-
-        <section id="scherm-toevoegen" class="scherm">
-            <form id="toevoeg-formulier" onsubmit="voegWijnToe(event)">
-                <label>Naam van de wijn (Optioneel)</label>
-                <input type="text" id="invoer-naam" placeholder="Bijv. Chateau Bordeaux">
-
-                <label>Kleur</label>
-                <select id="invoer-kleur">
-                    <option value="Rood">Rood</option>
-                    <option value="Wit">Wit</option>
-                    <option value="Rosé">Rosé</option>
-                    <option value="Champagne">Champagne</option>
-                    <option value="Anders">Anders</option>
-                </select>
-
-                <label>Jaartal (Optioneel)</label>
-                <input type="number" id="invoer-jaartal" placeholder="Bijv. 2018">
-
-                <label>Prijs in € (Optioneel)</label>
-                <input type="number" step="0.01" id="invoer-prijs" placeholder="Bijv. 25.50">
-
-                <label>Op smaak vanaf jaar (Optioneel)</label>
-                <input type="number" id="invoer-smaak" placeholder="Bijv. 2028">
-
-                <button type="submit" class="hoofd-knop">🍷 Opslaan in Kelder</button>
+    <div id="login-sectie">
+        <div class="login-box">
+            <h2>Matteo's Wijnkelder</h2>
+            <form id="login-formulier">
+                <input type="email" id="login-email" placeholder="E-mailadres" required>
+                <input type="password" id="login-wachtwoord" placeholder="Wachtwoord" required>
+                <button type="submit" class="hoofd-knop" id="login-knop">Kluis Openen</button>
+                <div id="login-fout" class="foutmelding">Inloggegevens onjuist.</div>
             </form>
-        </section>
-    </main>
+        </div>
+    </div>
 
-    <script>
-        // JAVASCRIPT: De logica van de app
+    <div id="app-sectie">
+        <header>
+            <h1>Matteo's Wijnkelder</h1>
+            <button class="uitlog-knop" id="uitlog-knop">Sluiten</button>
+        </header>
 
-        // 1. Data ophalen uit het geheugen van de browser, of een lege lijst starten
-        let wijnen = JSON.parse(localStorage.getItem('matteosWijnen')) || [];
+        <nav>
+            <button id="tab-kelder" class="actief">Mijn Kelder</button>
+            <button id="tab-toevoegen">Fles Toevoegen</button>
+        </nav>
 
-        // 2. Functie om te wisselen tussen de twee schermen
-        function wisselScherm(schermNaam) {
-            document.getElementById('scherm-kelder').classList.remove('actief');
-            document.getElementById('scherm-toevoegen').classList.remove('actief');
-            document.getElementById('tab-kelder').classList.remove('actief');
-            document.getElementById('tab-toevoegen').classList.remove('actief');
+        <main>
+            <section id="scherm-kelder" class="scherm actief">
+                <div class="controls">
+                    <select id="filter-kleur">
+                        <option value="Alle">Alle kleuren</option>
+                        <option value="Wit">Wit</option>
+                        <option value="Rood">Rood</option>
+                        <option value="Rosé">Rosé</option>
+                        <option value="Champagne">Champagne</option>
+                        <option value="Anders">Anders</option>
+                    </select>
+                    <select id="sorteer-optie">
+                        <option value="nieuwste">Nieuwste eerst</option>
+                        <option value="prijs-hoog">Prijs (Hoog - Laag)</option>
+                        <option value="prijs-laag">Prijs (Laag - Hoog)</option>
+                        <option value="smaak-jaar">Op smaak (Eerstvolgende)</option>
+                    </select>
+                </div>
+                <div id="wijn-lijst">
+                    <div class="laad-scherm">Kelder wordt geopend...</div>
+                </div>
+            </section>
 
-            document.getElementById('scherm-' + schermNaam).classList.add('actief');
-            document.getElementById('tab-' + schermNaam).classList.add('actief');
+            <section id="scherm-toevoegen" class="scherm">
+                <form id="toevoeg-formulier">
+                    <label>Naam van de wijn (Optioneel)</label>
+                    <input type="text" id="invoer-naam" placeholder="Bijv. Chateau Bordeaux">
 
-            if(schermNaam === 'kelder') {
+                    <label>Kleur</label>
+                    <select id="invoer-kleur">
+                        <option value="Rood">Rood</option>
+                        <option value="Wit">Wit</option>
+                        <option value="Rosé">Rosé</option>
+                        <option value="Champagne">Champagne</option>
+                        <option value="Anders">Anders</option>
+                    </select>
+
+                    <label>Jaartal (Optioneel)</label>
+                    <input type="number" id="invoer-jaartal" placeholder="Bijv. 2018">
+
+                    <label>Prijs in € (Optioneel)</label>
+                    <input type="number" step="0.01" id="invoer-prijs" placeholder="Bijv. 25.50">
+
+                    <label>Op smaak vanaf jaar (Optioneel)</label>
+                    <input type="number" id="invoer-smaak" placeholder="Bijv. 2028">
+
+                    <button type="submit" class="hoofd-knop">🍷 Opslaan in de Cloud</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        // Importeer Firebase functies via Google's servers
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // === JOUW FIREBASE CONFIGURATIE ===
+        // VERVANG DIT BLOK DOOR JOUW CODE UIT FIREBASE!
+        const firebaseConfig = {
+            apiKey: "JOUW_API_KEY_HIER",
+            authDomain: "jouw-project.firebaseapp.com",
+            projectId: "jouw-project",
+            storageBucket: "jouw-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        // Initializeer Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Globale lijst voor de wijnen
+        let wijnen = [];
+
+        // UI Elementen
+        const loginSectie = document.getElementById('login-sectie');
+        const appSectie = document.getElementById('app-sectie');
+        const loginForm = document.getElementById('login-formulier');
+        const loginFout = document.getElementById('login-fout');
+        const wijnLijst = document.getElementById('wijn-lijst');
+
+        // --- AUTHENTICATIE LOGICA ---
+
+        // Luister of iemand is ingelogd
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Ingelogd! Verberg login, toon app
+                loginSectie.style.display = 'none';
+                appSectie.style.display = 'flex';
+                haalWijnenOp(); // Haal data uit de cloud
+            } else {
+                // Uitgelogd! Toon login, verberg app
+                loginSectie.style.display = 'flex';
+                appSectie.style.display = 'none';
+            }
+        });
+
+        // Inloggen
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const wachtwoord = document.getElementById('login-wachtwoord').value;
+            const knop = document.getElementById('login-knop');
+            
+            knop.innerText = "Bezig...";
+            loginFout.style.display = 'none';
+
+            signInWithEmailAndPassword(auth, email, wachtwoord)
+                .then(() => {
+                    knop.innerText = "Kluis Openen";
+                    loginForm.reset();
+                })
+                .catch((error) => {
+                    knop.innerText = "Kluis Openen";
+                    loginFout.style.display = 'block';
+                    console.error("Inlog fout:", error);
+                });
+        });
+
+        // Uitloggen
+        document.getElementById('uitlog-knop').addEventListener('click', () => {
+            signOut(auth);
+        });
+
+        // --- DATABASE LOGICA ---
+
+        // Wijnen ophalen uit Firestore
+        async function haalWijnenOp() {
+            wijnLijst.innerHTML = '<div class="laad-scherm">Flessen aan het tellen...</div>';
+            wijnen = [];
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "wijnen"));
+                querySnapshot.forEach((doc) => {
+                    // Combineer de Firestore ID met de opgeslagen data
+                    wijnen.push({ id: doc.id, ...doc.data() });
+                });
                 tekenWijnen();
+            } catch (e) {
+                console.error("Fout bij ophalen wijnen: ", e);
+                wijnLijst.innerHTML = '<div class="laad-scherm" style="color:red;">Kon de kelder niet openen. Controleer Firebase instellingen.</div>';
             }
         }
 
-        // 3. Functie om een nieuwe wijn op te slaan
-        function voegWijnToe(event) {
-            event.preventDefault(); // Voorkomt dat de pagina herlaadt
-
+        // Wijn toevoegen aan Firestore
+        document.getElementById('toevoeg-formulier').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
             const nieuweWijn = {
-                id: Date.now(), // Unieke code gebaseerd op de tijd
                 naam: document.getElementById('invoer-naam').value || 'Onbekende Wijn',
                 kleur: document.getElementById('invoer-kleur').value,
                 jaartal: document.getElementById('invoer-jaartal').value,
@@ -286,76 +334,82 @@
                 datumToegevoegd: new Date().toISOString()
             };
 
-            wijnen.push(nieuweWijn);
-            slaOpEnHerlaad();
-            
-            // Maak formulier leeg
-            document.getElementById('toevoeg-formulier').reset();
-            
-            // Ga terug naar het overzicht
-            wisselScherm('kelder');
-        }
+            try {
+                await addDoc(collection(db, "wijnen"), nieuweWijn);
+                document.getElementById('toevoeg-formulier').reset();
+                wisselScherm('kelder');
+                haalWijnenOp(); // Herlaad de lijst met de nieuwe fles
+            } catch (e) {
+                console.error("Fout bij toevoegen: ", e);
+                alert("Er ging iets mis bij het opslaan in de cloud.");
+            }
+        });
 
-        // 4. Functie om een wijn te verwijderen (mocht hij opgedronken zijn!)
-        function verwijderWijn(id) {
+        // Wijn verwijderen uit Firestore
+        window.verwijderWijn = async function(id) {
             if(confirm("Heb je deze wijn opgedronken of wil je hem verwijderen?")) {
-                wijnen = wijnen.filter(wijn => wijn.id !== id);
-                slaOpEnHerlaad();
+                try {
+                    await deleteDoc(doc(db, "wijnen", id));
+                    haalWijnenOp(); // Herlaad de lijst
+                } catch (e) {
+                    console.error("Fout bij verwijderen: ", e);
+                }
             }
         }
 
-        // 5. Functie om data op te slaan in de browser
-        function slaOpEnHerlaad() {
-            localStorage.setItem('matteosWijnen', JSON.stringify(wijnen));
-            tekenWijnen();
+        // --- UI & TAB LOGICA ---
+
+        function wisselScherm(schermNaam) {
+            document.getElementById('scherm-kelder').classList.remove('actief');
+            document.getElementById('scherm-toevoegen').classList.remove('actief');
+            document.getElementById('tab-kelder').classList.remove('actief');
+            document.getElementById('tab-toevoegen').classList.remove('actief');
+
+            document.getElementById('scherm-' + schermNaam).classList.add('actief');
+            document.getElementById('tab-' + schermNaam).classList.add('actief');
         }
 
-        // 6. De belangrijkste functie: De wijnen op het scherm tekenen
+        document.getElementById('tab-kelder').addEventListener('click', () => wisselScherm('kelder'));
+        document.getElementById('tab-toevoegen').addEventListener('click', () => wisselScherm('toevoegen'));
+
+        // Tekenen en Filteren van wijnen
         function tekenWijnen() {
-            const lijstContainer = document.getElementById('wijn-lijst');
             const filterKleur = document.getElementById('filter-kleur').value;
             const sorteerOptie = document.getElementById('sorteer-optie').value;
             
-            lijstContainer.innerHTML = ''; // Maak de lijst eerst leeg
+            wijnLijst.innerHTML = ''; 
 
-            // Filteren
             let gefilterdeWijnen = wijnen;
             if (filterKleur !== 'Alle') {
                 gefilterdeWijnen = wijnen.filter(wijn => wijn.kleur === filterKleur);
             }
 
-            // Sorteren
             gefilterdeWijnen.sort((a, b) => {
                 if (sorteerOptie === 'prijs-hoog') return b.prijs - a.prijs;
                 if (sorteerOptie === 'prijs-laag') return a.prijs - b.prijs;
                 if (sorteerOptie === 'smaak-jaar') {
-                    // Als er geen smaakjaar is ingevuld, zet deze dan achteraan
                     const jaarA = a.smaakVanaf ? parseInt(a.smaakVanaf) : 9999;
                     const jaarB = b.smaakVanaf ? parseInt(b.smaakVanaf) : 9999;
                     return jaarA - jaarB;
                 }
-                // Standaard: Nieuwste eerst (datum)
                 return new Date(b.datumToegevoegd) - new Date(a.datumToegevoegd);
             });
 
-            // Als er geen wijnen zijn
             if (gefilterdeWijnen.length === 0) {
-                lijstContainer.innerHTML = '<p class="leeg-bericht">Geen wijnen gevonden in deze categorie.</p>';
+                wijnLijst.innerHTML = '<p style="text-align:center; color:#888; margin-top:40px;">Geen wijnen in deze categorie.</p>';
                 return;
             }
 
-            // HTML maken voor elke wijn
             gefilterdeWijnen.forEach(wijn => {
                 const kaart = document.createElement('div');
                 kaart.className = 'wijn-kaart';
                 
-                // Formatteer details die leeg kunnen zijn
                 const prijsTekst = wijn.prijs > 0 ? `€${wijn.prijs.toFixed(2)}` : 'Prijs onbekend';
                 const jaartalTekst = wijn.jaartal ? `Jaar: ${wijn.jaartal}` : 'Jaar onbekend';
-                const smaakTekst = wijn.smaakVanaf ? `Op smaak vanaf: ${wijn.smaakVanaf}` : '';
+                const smaakTekst = wijn.smaakVanaf ? `Op smaak: ${wijn.smaakVanaf}` : '';
 
                 kaart.innerHTML = `
-                    <button class="verwijder-knop" onclick="verwijderWijn(${wijn.id})">×</button>
+                    <button class="verwijder-knop" onclick="verwijderWijn('${wijn.id}')">×</button>
                     <div class="wijn-naam">${wijn.naam}</div>
                     <div class="wijn-details">
                         <span>🍷 ${wijn.kleur}</span>
@@ -364,13 +418,13 @@
                     </div>
                     ${smaakTekst ? `<div class="wijn-tag">⏳ ${smaakTekst}</div>` : ''}
                 `;
-                
-                lijstContainer.appendChild(kaart);
+                wijnLijst.appendChild(kaart);
             });
         }
 
-        // Start de app door de lijst 1x te tekenen
-        tekenWijnen();
+        // Koppel filters aan de tekenfunctie
+        document.getElementById('filter-kleur').addEventListener('change', tekenWijnen);
+        document.getElementById('sorteer-optie').addEventListener('change', tekenWijnen);
     </script>
 </body>
 </html>
