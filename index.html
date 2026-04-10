@@ -15,22 +15,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --burgundy-deep: #4a0e0e;
-            --burgundy: #6b1d1d;
-            --oak-dark: #2c1810;
-            --oak: #3e2215;
-            --oak-light: #5a3a28;
-            --gold: #c9a96e;
-            --gold-light: #d4bc8b;
-            --gold-dim: rgba(201,169,110,0.3);
-            --parchment: #f5efe0;
-            --parchment-dark: #e8dcc8;
-            --stone-dark: #1a0a0a;
-            --stone: #241414;
-            --stone-card: #2a1a1a;
-            --text-light: #e8dcc8;
-            --text-muted: #a89480;
-            --danger: #c0392b;
+            --burgundy-deep: #1a1a1a;
+            --burgundy: #2a2a2a;
+            --oak-dark: #141414;
+            --oak: #1e1e1e;
+            --oak-light: #333333;
+            --gold: #b8976a;
+            --gold-light: #cbaa7d;
+            --gold-dim: rgba(184,151,106,0.2);
+            --parchment: #e8e0d4;
+            --parchment-dark: #d4ccc0;
+            --stone-dark: #0a0a0a;
+            --stone: #111111;
+            --stone-card: #181818;
+            --text-light: #d4ccc0;
+            --text-muted: #7a7268;
+            --danger: #8b3a3a;
             --radius: 12px;
             --shadow: 0 8px 32px rgba(0,0,0,0.5);
             --safe-top: env(safe-area-inset-top);
@@ -45,8 +45,8 @@
             display: flex; flex-direction: column;
             overscroll-behavior: none;
             background-image:
-                radial-gradient(ellipse at 20% 50%, rgba(74,14,14,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(62,34,21,0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(184,151,106,0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(184,151,106,0.02) 0%, transparent 50%);
         }
         /* Subtle stone texture overlay */
         body::before {
@@ -81,7 +81,7 @@
         }
         .login-logo {
             width: 80px; height: 80px; margin: 0 auto 16px; border-radius: 20px;
-            background: linear-gradient(135deg, var(--burgundy-deep), var(--oak-dark));
+            background: linear-gradient(135deg, #1e1e1e, #0e0e0e);
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 16px rgba(0,0,0,0.4);
         }
@@ -112,12 +112,13 @@
         .btn-primary {
             width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer;
             font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600;
-            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            background: linear-gradient(135deg, #252525, #1a1a1a);
             color: var(--gold-light); letter-spacing: 0.5px;
-            box-shadow: 0 4px 16px rgba(74,14,14,0.4);
+            border: 1px solid rgba(184,151,106,0.15);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(74,14,14,0.3); }
+        .btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
         .foutmelding { color: var(--danger); font-size: 14px; margin-top: 14px; display: none; }
 
         /* === APP SHELL === */
@@ -212,7 +213,7 @@
             display: inline-block; width: 8px; height: 8px; border-radius: 50%;
             margin-right: 6px; vertical-align: middle;
         }
-        .kleur-rood { background: #8b1a1a; box-shadow: 0 0 6px rgba(139,26,26,0.5); }
+        .kleur-rood { background: #9b2335; box-shadow: 0 0 6px rgba(155,35,53,0.4); }
         .kleur-wit { background: #e8dcc8; box-shadow: 0 0 6px rgba(232,220,200,0.3); }
         .kleur-rose { background: #d4708f; box-shadow: 0 0 6px rgba(212,112,143,0.4); }
         .kleur-champagne { background: #daa520; box-shadow: 0 0 6px rgba(218,165,32,0.4); }
