@@ -727,8 +727,28 @@
         }
     });
 
-    // Opgedronken → open review modal
-    document.getElementById('detail-opgedronken').addEventListener('click', () => {
+    // Opgedronken → open review modal of verlaag aantal als al gereviewd
+    document.getElementById('detail-opgedronken').addEventListener('click', async () => {
+        const wijn = wijnen.find(w => w.id === huidigeWijnId);
+        if (!wijn) return;
+
+        // Als de wijn al een review heeft (rating > 0), sla de vraag over
+        if (wijn.rating > 0) {
+            try {
+                if (huidigeAantal > 1) {
+                    await updateDoc(doc(db, 'wijnen', huidigeWijnId), { aantal: huidigeAantal - 1 });
+                    toonToast(`Fles opgedronken (${huidigeAantal - 1} over)`);
+                } else {
+                    await updateDoc(doc(db, 'wijnen', huidigeWijnId), { gedronken: true });
+                    toonToast('Laatste fles opgedronken');
+                }
+                detailModal.classList.remove('actief');
+                haalWijnenOp();
+            } catch(e) { console.error(e); }
+            return;
+        }
+
+        // Geen review: open review modal
         detailModal.classList.remove('actief');
         document.getElementById('review-score-slider').value = 7;
         document.getElementById('review-score-display').textContent = '7';
@@ -744,30 +764,53 @@
     // Submit review
     document.getElementById('review-submit').addEventListener('click', async () => {
         if (!huidigeWijnId) return;
+        const rating = parseInt(document.getElementById('review-score-slider').value);
+        const notitie = document.getElementById('review-notitie').value;
+        const datumGedronken = new Date().toISOString();
+
         try {
-            await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
-                gedronken: true,
-                rating: parseInt(document.getElementById('review-score-slider').value),
-                notitie: document.getElementById('review-notitie').value,
-                datumGedronken: new Date().toISOString()
-            });
+            if (huidigeAantal > 1) {
+                // Fles blijft in kelder (aantal - 1), krijgt wel de review
+                await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
+                    aantal: huidigeAantal - 1,
+                    rating: rating,
+                    notitie: notitie,
+                    datumGedronken: datumGedronken
+                });
+                toonToast(`Review opgeslagen (${huidigeAantal - 1} flessen over)`);
+            } else {
+                // Laatste fles: gaat ui de kelder
+                await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
+                    gedronken: true,
+                    rating: rating,
+                    notitie: notitie,
+                    datumGedronken: datumGedronken
+                });
+                toonToast('Beoordeling opgeslagen');
+            }
             document.getElementById('review-modal').classList.remove('actief');
             haalWijnenOp();
-            toonToast('Beoordeling opgeslagen');
         } catch (e) {
             console.error(e);
             toonToast('Opslaan mislukt');
         }
     });
 
-    // Skip review → just delete
+    // Skip review → just delete or decrement
     document.getElementById('review-skip').addEventListener('click', async () => {
         if (!huidigeWijnId) return;
         try {
-            await deleteDoc(doc(db, 'wijnen', huidigeWijnId));
+            if (huidigeAantal > 1) {
+                await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
+                    aantal: huidigeAantal - 1
+                });
+                toonToast(`Fles opgedronken (${huidigeAantal - 1} over)`);
+            } else {
+                await deleteDoc(doc(db, 'wijnen', huidigeWijnId));
+                toonToast('Fles verwijderd');
+            }
             document.getElementById('review-modal').classList.remove('actief');
             haalWijnenOp();
-            toonToast('Fles verwijderd');
         } catch (e) { console.error(e); }
     });
 
@@ -932,7 +975,7 @@
 
     // === RENDER GEDRONKEN ===
     function tekenGedronken() {
-        const lijst = wijnen.filter(w => w.gedronken).sort((a, b) => {
+        const lijst = wijnen.filter(w => w.gedronken || w.rating > 0).sort((a, b) => {
             return new Date(b.datumGedronken || b.datumToegevoegd) - new Date(a.datumGedronken || a.datumToegevoegd);
         });
         const container = document.getElementById('gedronken-lijst');
@@ -978,7 +1021,14 @@
     window.verwijderGedronken = async function(id) {
         if (confirm('Deze beoordeling permanent verwijderen?')) {
             try {
-                await deleteDoc(doc(db, 'wijnen', id));
+                const w = wijnen.find(w => w.id === id);
+                if (w && !w.gedronken) {
+                    // Wijn zit nog in de kelder, verwijder alleen de review
+                    await updateDoc(doc(db, 'wijnen', id), { rating: null, notitie: null, datumGedronken: null });
+                } else {
+                    // Wijn was al helemaal uit de kelder, verwijder document
+                    await deleteDoc(doc(db, 'wijnen', id));
+                }
                 haalWijnenOp();
                 toonToast('Beoordeling verwijderd');
             } catch (e) { console.error(e); }
