@@ -38,6 +38,24 @@
             --safe-top: env(safe-area-inset-top);
             --safe-bottom: env(safe-area-inset-bottom);
         }
+        :root[data-theme="dark"] {
+            --bg-body: #1a1512;
+            --bg-card: #241c17;
+            --bg-nav: #241c17;
+            --wood-dark: #c2aa95;
+            --wood-main: #b08d60;
+            --wood-light: #786b5d;
+            --gold: #d4b584;
+            --gold-light: #f1d7a3;
+            --gold-dim: rgba(212,181,132,0.15);
+            --text-main: #f9f5ef;
+            --text-muted: #a69888;
+            --border-dim: rgba(194, 170, 149, 0.15);
+            --border-med: rgba(194, 170, 149, 0.3);
+            --danger: #e74c3c;
+            --danger-bg: rgba(231,76,60,0.15);
+            --parchment: #2c241e;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
@@ -506,7 +524,7 @@
             <div class="detail-info-grid" id="gedronken-info-grid"></div>
             <div class="detail-section">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <div class="detail-section-title" style="margin-bottom:0;">Proefnotitie</div>
+                    <div class="detail-section-title" style="margin-bottom:0;">Datum & Proefnotitie Edit</div>
                     <button id="gedronken-edit-notitie" style="background:none; border:none; color:var(--wood-main); cursor:pointer; padding:4px;">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
                     </button>
@@ -514,8 +532,13 @@
                 <div id="gedronken-notitie-display" style="background:var(--bg-card); border:1px solid var(--border-dim); border-radius:12px; padding:16px; font-style:italic; font-size:15px; min-height:80px; box-shadow:inset 0 2px 4px rgba(0,0,0,0.01); line-height:1.5;"></div>
                 
                 <div id="gedronken-notitie-edit-box" style="display:none; margin-top:10px;">
+                    <label style="font-size:12px; color:var(--text-muted); margin-bottom:4px; display:block; text-transform:uppercase; letter-spacing:1px; font-weight:600;">Datum gedronken</label>
+                    <input type="date" id="gedronken-datum-input" style="width:100%; padding:10px; margin-bottom:12px; border-radius:8px; border:1px solid var(--border-med); background:var(--bg-body); color:var(--text-main); font-family:'Cormorant Garamond',serif;">
+                    
+                    <label style="font-size:12px; color:var(--text-muted); margin-bottom:4px; display:block; text-transform:uppercase; letter-spacing:1px; font-weight:600;">Notitie</label>
                     <textarea id="gedronken-notitie-input" class="review-notitie" style="margin-bottom:8px; height:120px;"></textarea>
-                    <button class="btn-detail-save" style="width:100%" id="gedronken-notitie-save">Opslaan</button>
+                    
+                    <button class="btn-detail-save" style="width:100%" id="gedronken-notitie-save">Aanpassingen Opslaan</button>
                 </div>
             </div>
         </div>
@@ -543,7 +566,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M12 16v2M8 11V7a4 4 0 018 0v4"/></svg>
                     <input class="input-field" type="password" id="login-wachtwoord" placeholder="Wachtwoord" required>
                 </div>
-                <button type="submit" class="btn-primary" id="login-knop">Kluis Openen</button>
+                <button type="submit" class="btn-primary" id="login-knop">Kelder Openen</button>
                 <div id="login-fout" class="foutmelding">Inloggegevens onjuist.</div>
             </form>
         </div>
@@ -553,6 +576,9 @@
     <div id="app-sectie">
         <header>
             <img src="icon-192.png" alt="Logo" style="width:36px;height:36px;border-radius:8px;margin-bottom:6px;">
+            <button class="thema-knop" id="thema-knop" style="position: absolute; left: 16px; top: calc(16px + var(--safe-top)); background: var(--bg-body); border: 1px solid var(--border-dim); color: var(--wood-main); padding: 6px 10px; border-radius: 6px; cursor: pointer;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16" style="vertical-align:middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
             <h1>Matteo's Wijnkelder</h1>
             <p class="subtitle">Persoonlijke Collectie</p>
             <button class="uitlog-knop" id="uitlog-knop">
@@ -567,6 +593,16 @@
                     <div class="stat-item"><div class="stat-number" id="stat-totaal">0</div><div class="stat-label">Flessen</div></div>
                     <div class="stat-item"><div class="stat-number" id="stat-rood">0</div><div class="stat-label">Rood</div></div>
                     <div class="stat-item"><div class="stat-number" id="stat-wit">0</div><div class="stat-label">Wit</div></div>
+                </div>
+                <!-- FILTER & SORT BAR (KELDER) -->
+                <div style="display:flex; gap:8px; margin-bottom:16px;">
+                    <input type="text" id="kelder-zoek" placeholder="Zoeken..." style="flex:1; padding:10px 14px; border-radius:8px; border:1px solid var(--border-med); background:var(--bg-body); color:var(--text-main); font-family:'Cormorant Garamond',serif; font-size:16px;">
+                    <select id="kelder-sorteer" style="padding:10px; border-radius:8px; border:1px solid var(--border-med); background:var(--bg-body); color:var(--wood-dark); font-family:'Cormorant Garamond',serif;">
+                        <option value="datum-nieuw">Nieuwste toevoegingen</option>
+                        <option value="prijs-laag">Prijs (Laag naar Hoog)</option>
+                        <option value="prijs-hoog">Prijs (Hoog naar Laag)</option>
+                        <option value="alfabet">Alfabetisch</option>
+                    </select>
                 </div>
                 <div id="wijn-lijst">
                     <div class="laad-scherm"><span class="loader">Kelder wordt geopend...</span></div>
@@ -597,8 +633,17 @@
             <!-- GEDRONKEN -->
             <section id="scherm-gedronken" class="scherm">
                 <div style="text-align:center;margin-bottom:16px;">
-                    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--wood-dark);margin-bottom:4px;font-weight:700;">Proefnotities</div>
+                    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--wood-dark);margin-bottom:4px;font-weight:700;">Gedronken flessen</div>
                     <div style="font-size:13px;color:var(--text-muted);font-weight:500;">Wijnen die je hebt gedronken en beoordeeld</div>
+                </div>
+                <!-- FILTER & SORT BAR (GEDRONKEN) -->
+                <div style="display:flex; gap:8px; margin-bottom:16px;">
+                    <input type="text" id="gedronken-zoek" placeholder="Zoeken..." style="flex:1; padding:10px 14px; border-radius:8px; border:1px solid var(--border-med); background:var(--bg-body); color:var(--text-main); font-family:'Cormorant Garamond',serif; font-size:16px;">
+                    <select id="gedronken-sorteer" style="padding:10px; border-radius:8px; border:1px solid var(--border-med); background:var(--bg-body); color:var(--wood-dark); font-family:'Cormorant Garamond',serif;">
+                        <option value="datum-nieuw">Recent gedronken</option>
+                        <option value="cijfer-hoog">Beste beoordeling (Hoog-Laag)</option>
+                        <option value="prijs-hoog">Prijs (Hoog-Laag)</option>
+                    </select>
                 </div>
                 <div id="gedronken-lijst"></div>
             </section>
@@ -875,7 +920,15 @@
     document.getElementById('gedronken-edit-notitie').addEventListener('click', () => {
         const wijn = wijnen.find(w => w.id === huidigeGedronkenId);
         document.getElementById('gedronken-notitie-display').style.display = 'none';
+        
         document.getElementById('gedronken-notitie-input').value = wijn ? (wijn.notitie || '') : '';
+        if (wijn && wijn.datumGedronken) {
+            const d = new Date(wijn.datumGedronken);
+            document.getElementById('gedronken-datum-input').value = d.toISOString().split('T')[0];
+        } else {
+            document.getElementById('gedronken-datum-input').value = '';
+        }
+
         document.getElementById('gedronken-notitie-edit-box').style.display = 'block';
         document.getElementById('gedronken-notitie-input').focus();
     });
@@ -883,20 +936,40 @@
     document.getElementById('gedronken-notitie-save').addEventListener('click', async () => {
         if (!huidigeGedronkenId) return;
         const note = document.getElementById('gedronken-notitie-input').value;
+        let datumValue = document.getElementById('gedronken-datum-input').value;
+        if(datumValue) {
+            datumValue += 'T12:00:00Z'; // add basic time
+        }
+
+        const updates = { notitie: note };
+        if(datumValue) updates.datumGedronken = datumValue;
+
         const knop = document.getElementById('gedronken-notitie-save');
         knop.innerText = "Opslaan..."; knop.disabled = true;
         try {
-            await updateDoc(doc(db, 'wijnen', huidigeGedronkenId), { notitie: note });
-            document.getElementById('gedronken-notitie-display').textContent = note || 'Geen proefnotitie ingevoerd.';
+            await updateDoc(doc(db, 'wijnen', huidigeGedronkenId), updates);
+            
+            // update local display conditionally immediately, but re-render list eventually
+            const datumFormaat = datumValue ? new Date(datumValue).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '\u2014';
+            
+            // we will just re-open the modal and re-render
+            const opslagIdx = wijnen.findIndex(w => w.id === huidigeGedronkenId);
+            if(opslagIdx > -1) {
+                wijnen[opslagIdx].notitie = note;
+                if(datumValue) wijnen[opslagIdx].datumGedronken = datumValue;
+            }
+
             document.getElementById('gedronken-notitie-display').style.display = 'block';
             document.getElementById('gedronken-notitie-edit-box').style.display = 'none';
-            knop.innerText = "Opslaan"; knop.disabled = false;
+            knop.innerText = "Aanpassingen Opslaan"; knop.disabled = false;
+            
+            openGedronkenDetail(huidigeGedronkenId); // reload modal content visually
             haalWijnenOp();
-            toonToast('Notitie opgeslagen');
+            toonToast('Aanpassingen opgeslagen');
         } catch(e) {
             console.error(e);
             toonToast('Opslaan mislukt');
-            knop.innerText = "Opslaan"; knop.disabled = false;
+            knop.innerText = "Aanpassingen Opslaan"; knop.disabled = false;
         }
     });
 
@@ -965,6 +1038,33 @@
     document.getElementById('tab-gedronken').addEventListener('click', () => wisselScherm('gedronken'));
     document.getElementById('tab-toevoegen').addEventListener('click', () => wisselScherm('toevoegen'));
 
+    // === THEMA (Dark Mode) ===
+    const themeKnop = document.getElementById('thema-knop');
+    let isDark = localStorage.getItem('theme') === 'dark';
+    if(isDark) document.documentElement.setAttribute('data-theme', 'dark');
+    themeKnop.addEventListener('click', () => {
+        isDark = !isDark;
+        if(isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // === ZOEKEN EN SORTEREN ===
+    let kelderSearch = '';
+    let kelderSort = 'datum-nieuw';
+    let gedronkenSearch = '';
+    let gedronkenSort = 'datum-nieuw';
+
+    document.getElementById('kelder-zoek').addEventListener('input', (e) => { kelderSearch = e.target.value.toLowerCase(); tekenWijnen(); });
+    document.getElementById('kelder-sorteer').addEventListener('change', (e) => { kelderSort = e.target.value; tekenWijnen(); });
+    
+    document.getElementById('gedronken-zoek').addEventListener('input', (e) => { gedronkenSearch = e.target.value.toLowerCase(); tekenGedronken(); });
+    document.getElementById('gedronken-sorteer').addEventListener('change', (e) => { gedronkenSort = e.target.value; tekenGedronken(); });
+
     // === RENDER WINES (collapsible accordion) ===
     function kleurClass(kleur) {
         const m = { 'Rood': 'kleur-rood', 'Wit': 'kleur-wit', 'Rosé': 'kleur-rose', 'Champagne': 'kleur-champagne' };
@@ -976,13 +1076,31 @@
     let openGroepen = new Set(['Rood']);
 
     function tekenWijnen() {
-        const kelderWijnen = wijnen.filter(w => !w.gedronken);
+        let kelderWijnen = wijnen.filter(w => !w.gedronken);
+        
+        if (kelderSearch) {
+            kelderWijnen = kelderWijnen.filter(w => 
+                (w.naam || '').toLowerCase().includes(kelderSearch) ||
+                (w.kleur || '').toLowerCase().includes(kelderSearch) ||
+                (w.jaartal || '').toString().includes(kelderSearch) ||
+                (w.notitie || '').toLowerCase().includes(kelderSearch)
+            );
+        }
+
+        kelderWijnen.sort((a, b) => {
+            if (kelderSort === 'datum-nieuw') return new Date(b.datumToegevoegd) - new Date(a.datumToegevoegd);
+            if (kelderSort === 'prijs-laag') return (a.prijs || 0) - (b.prijs || 0);
+            if (kelderSort === 'prijs-hoog') return (b.prijs || 0) - (a.prijs || 0);
+            if (kelderSort === 'alfabet') return (a.naam || '').localeCompare((b.naam || ''));
+            return 0;
+        });
+
         wijnLijst.innerHTML = '';
 
         if (kelderWijnen.length === 0) {
             wijnLijst.innerHTML = `<div class="empty-state">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C12 2 9 8 9 12c0 1.66 1.34 3 3 3s3-1.34 3-3c0-4-3-10-3-10z"/><path d="M12 15v7M9 22h6"/></svg>
-                <p>De kelder is leeg</p></div>`;
+                <p>Geen resultaten in kelder</p></div>`;
             return;
         }
 
@@ -999,7 +1117,7 @@
             if (lijst.length === 0) return;
 
             const flessen = lijst.reduce((s, w) => s + (w.aantal || 1), 0);
-            const isOpen = openGroepen.has(kleur);
+            const isOpen = openGroepen.has(kleur) || kelderSearch !== ''; // auto open if searching
             const dotColor = kleurDotKleuren[kleur];
 
             const groepDiv = document.createElement('div');
@@ -1026,8 +1144,6 @@
                 header.classList.toggle('open');
                 body.classList.toggle('open');
             });
-
-            lijst.sort((a, b) => new Date(b.datumToegevoegd) - new Date(a.datumToegevoegd));
 
             lijst.forEach(wijn => {
                 const k = document.createElement('div');
@@ -1060,48 +1176,117 @@
     }
 
     // === RENDER GEDRONKEN ===
+    let openGedronkenGroepen = new Set(['Deze maand', 'Dit jaar']);
+
+    function getDrunkGroup(datumString) {
+        if (!datumString) return 'Eerder';
+        const d = new Date(datumString);
+        const now = new Date();
+        if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) return 'Deze maand';
+        if (d.getFullYear() === now.getFullYear()) return 'Dit jaar';
+        if (d.getFullYear() === now.getFullYear() - 1) return 'Vorig jaar';
+        return 'Eerder';
+    }
+
+    const gedronkenVolgorde = ['Deze maand', 'Dit jaar', 'Vorig jaar', 'Eerder'];
+
     function tekenGedronken() {
-        const lijst = wijnen.filter(w => w.gedronken || w.rating > 0).sort((a, b) => {
-            return new Date(b.datumGedronken || b.datumToegevoegd) - new Date(a.datumGedronken || a.datumToegevoegd);
+        let lijst = wijnen.filter(w => w.gedronken || w.rating > 0);
+        
+        if (gedronkenSearch) {
+            lijst = lijst.filter(w => 
+                (w.naam || '').toLowerCase().includes(gedronkenSearch) ||
+                (w.kleur || '').toLowerCase().includes(gedronkenSearch) ||
+                (w.notitie || '').toLowerCase().includes(gedronkenSearch)
+            );
+        }
+
+        lijst.sort((a, b) => {
+            if (gedronkenSort === 'datum-nieuw') return new Date(b.datumGedronken || b.datumToegevoegd) - new Date(a.datumGedronken || a.datumToegevoegd);
+            if (gedronkenSort === 'cijfer-hoog') return (b.rating || 0) - (a.rating || 0);
+            if (gedronkenSort === 'prijs-hoog') return (b.prijs || 0) - (a.prijs || 0);
+            return 0;
         });
+
         const container = document.getElementById('gedronken-lijst');
         container.innerHTML = '';
 
         if (lijst.length === 0) {
             container.innerHTML = `<div class="empty-state">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M8 2h8l-1 7H9L8 2z"/><path d="M12 9v6"/><path d="M7 21h10"/><path d="M9 15h6"/></svg>
-                <p>Nog geen wijnen gedronken</p></div>`;
+                <p>Geen resultaten</p></div>`;
             return;
         }
 
-        lijst.forEach((wijn, i) => {
-            const k = document.createElement('div');
-            k.className = 'wijn-kaart';
-            k.style.animationDelay = `${i * 0.06}s`;
-            k.style.cursor = 'pointer';
-            k.onclick = () => openGedronkenDetail(wijn.id);
+        // Groepeer op datum
+        const groepen = {};
+        gedronkenVolgorde.forEach(k => groepen[k] = []);
+        lijst.forEach(w => {
+            const k = getDrunkGroup(w.datumGedronken || w.datumToegevoegd);
+            groepen[k].push(w);
+        });
 
-            const score = wijn.rating || '\u2014';
-            const datum = wijn.datumGedronken ? new Date(wijn.datumGedronken).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        gedronkenVolgorde.forEach(groep => {
+            const sublijst = groepen[groep];
+            if (sublijst.length === 0) return;
 
-            k.innerHTML = `
-                <div class="wijn-info">
-                    <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
-                    <div style="display:flex;align-items:baseline;gap:8px;margin:6px 0;">
-                        <span style="font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);font-weight:700;">${score}</span>
-                        <span style="font-size:14px;color:var(--text-muted);">/10</span>
-                    </div>
-                    ${wijn.notitie ? `<div style="font-size:14px;color:var(--text-light);font-style:italic;margin-bottom:6px;line-height:1.4;">\u201c${wijn.notitie}\u201d</div>` : ''}
-                    <div class="wijn-meta">
-                        ${wijn.kleur ? `<span class="wijn-meta-item">${wijn.kleur}</span>` : ''}
-                        ${wijn.jaartal ? `<span class="wijn-meta-item">${wijn.jaartal}</span>` : ''}
-                        ${datum ? `<span class="wijn-meta-item">${datum}</span>` : ''}
-                    </div>
+            const isOpen = openGedronkenGroepen.has(groep) || gedronkenSearch !== '';
+
+            const groepDiv = document.createElement('div');
+            groepDiv.className = 'kleur-groep'; 
+            const header = document.createElement('div');
+            header.className = 'kleur-groep-header' + (isOpen ? ' open' : '');
+            header.innerHTML = `
+                <div class="kleur-groep-left">
+                    <div class="kleur-groep-naam">${groep}</div>
                 </div>
-                <button class="verwijder-knop" onclick="event.stopPropagation();verwijderGedronken('${wijn.id}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-                </button>`;
-            container.appendChild(k);
+                <div class="kleur-groep-count">
+                    ${sublijst.length}
+                    <svg class="kleur-groep-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                </div>`;
+            const body = document.createElement('div');
+            body.className = 'kleur-groep-body' + (isOpen ? ' open' : '');
+
+            header.addEventListener('click', () => {
+                if (openGedronkenGroepen.has(groep)) openGedronkenGroepen.delete(groep);
+                else openGedronkenGroepen.add(groep);
+                header.classList.toggle('open');
+                body.classList.toggle('open');
+            });
+
+            sublijst.forEach((wijn, i) => {
+                const k = document.createElement('div');
+                k.className = 'wijn-kaart';
+                k.style.animationDelay = `${i * 0.06}s`;
+                k.style.cursor = 'pointer';
+                k.onclick = () => openGedronkenDetail(wijn.id);
+
+                const score = wijn.rating || '\u2014';
+                const datum = wijn.datumGedronken ? new Date(wijn.datumGedronken).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+                k.innerHTML = `
+                    <div class="wijn-info">
+                        <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
+                        <div style="display:flex;align-items:baseline;gap:8px;margin:6px 0;">
+                            <span style="font-family:'Playfair Display',serif;font-size:28px;color:var(--gold);font-weight:700;">${score}</span>
+                            <span style="font-size:14px;color:var(--text-muted);">/10</span>
+                        </div>
+                        ${wijn.notitie ? `<div style="font-size:14px;color:var(--text-light);font-style:italic;margin-bottom:6px;line-height:1.4;">\u201c${wijn.notitie}\u201d</div>` : ''}
+                        <div class="wijn-meta">
+                            ${wijn.kleur ? `<span class="wijn-meta-item">${wijn.kleur}</span>` : ''}
+                            ${wijn.jaartal ? `<span class="wijn-meta-item">${wijn.jaartal}</span>` : ''}
+                            ${datum ? `<span class="wijn-meta-item">${datum}</span>` : ''}
+                        </div>
+                    </div>
+                    <button class="verwijder-knop" onclick="event.stopPropagation();verwijderGedronken('${wijn.id}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+                    </button>`;
+                body.appendChild(k);
+            });
+
+            groepDiv.appendChild(header);
+            groepDiv.appendChild(body);
+            container.appendChild(groepDiv);
         });
     }
 
