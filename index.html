@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Matteo's Wijnkelder</title>
     <meta name="description" content="De persoonlijke wijnkelder van Matteo — beheer je collectie met stijl.">
-    <meta name="theme-color" content="#2c1810">
+    <meta name="theme-color" content="#f7f4ed">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Wijnkelder">
@@ -15,44 +15,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --burgundy-deep: #1a1a1a;
-            --burgundy: #2a2a2a;
-            --oak-dark: #141414;
-            --oak: #1e1e1e;
-            --oak-light: #333333;
-            --gold: #b8976a;
-            --gold-light: #cbaa7d;
-            --gold-dim: rgba(184,151,106,0.2);
-            --parchment: #e8e0d4;
-            --parchment-dark: #d4ccc0;
-            --stone-dark: #0a0a0a;
-            --stone: #111111;
-            --stone-card: #181818;
-            --text-light: #d4ccc0;
-            --text-muted: #7a7268;
-            --danger: #8b3a3a;
+            /* App Theme: Elegant Light Wood & Cream */
+            --bg-body: #f7f4ed; /* Light cream */
+            --bg-card: #ffffff; /* Crisp white */
+            --bg-nav: #ffffff;
+            --wood-dark: #4a3424;
+            --wood-main: #8c6a4f;
+            --wood-light: #c2aa95;
+            --gold: #8b683b; /* Readable dark gold */
+            --gold-light: #b08d60;
+            --gold-dim: rgba(139,104,59,0.15);
+            --text-main: #2a221b; /* Charcoal/Dark brown */
+            --text-muted: #786b5d;
+            --border-dim: rgba(74, 52, 36, 0.1); /* Instead of white borders */
+            --border-med: rgba(74, 52, 36, 0.2);
+            --danger: #c0392b;
+            --danger-bg: rgba(192,57,43,0.08);
+            --parchment: #f9f5ef;
             --radius: 12px;
-            --shadow: 0 8px 32px rgba(0,0,0,0.5);
+            --shadow: 0 8px 24px rgba(74, 52, 36, 0.08);
+            --shadow-sm: 0 4px 12px rgba(74, 52, 36, 0.05);
             --safe-top: env(safe-area-inset-top);
             --safe-bottom: env(safe-area-inset-bottom);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            background-color: var(--stone-dark);
-            color: var(--text-light);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh; min-height: 100dvh;
             display: flex; flex-direction: column;
             overscroll-behavior: none;
             background-image:
-                radial-gradient(ellipse at 20% 50%, rgba(184,151,106,0.03) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(184,151,106,0.02) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, var(--gold-dim) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, var(--gold-dim) 0%, transparent 50%);
         }
-        /* Subtle stone texture overlay */
+        /* Subtle paper texture overlay */
         body::before {
             content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.1; mix-blend-mode: multiply;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a3424' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         /* === ANIMATIONS === */
@@ -68,84 +70,84 @@
         }
         .login-bg-glow {
             position: absolute; width: 300px; height: 300px; border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, var(--gold-dim) 0%, transparent 70%);
             top: 20%; left: 50%; transform: translateX(-50%); pointer-events: none;
         }
         .login-box {
-            background: linear-gradient(145deg, var(--stone-card), var(--stone));
+            background: var(--bg-card);
             padding: 40px 30px; border-radius: var(--radius); width: 100%; max-width: 380px;
-            box-shadow: var(--shadow), inset 0 1px 0 rgba(201,169,110,0.1);
+            box-shadow: var(--shadow);
             text-align: center; position: relative; z-index: 1;
-            border: 1px solid rgba(201,169,110,0.08);
+            border: 1px solid var(--border-dim);
             animation: fadeInUp 0.8s ease;
         }
         .login-logo {
             width: 80px; height: 80px; margin: 0 auto 16px; border-radius: 20px;
-            background: linear-gradient(135deg, #1e1e1e, #0e0e0e);
+            background: var(--bg-card); border: 1px solid var(--border-dim);
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            box-shadow: var(--shadow-sm);
         }
-        .login-logo svg { width: 44px; height: 44px; }
+        .login-logo img { width: 60px; height: 60px; border-radius: 14px; }
         .login-box h2 {
             font-family: 'Playfair Display', Georgia, serif; font-size: 26px;
-            color: var(--gold); margin-bottom: 4px; font-weight: 600; letter-spacing: 0.5px;
+            color: var(--wood-dark); margin-bottom: 4px; font-weight: 700; letter-spacing: 0.5px;
         }
-        .login-subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; font-weight: 300; }
+        .login-subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 28px; font-weight: 500; }
         .login-divider {
-            height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+            height: 1px; background: linear-gradient(to right, transparent, var(--border-med), transparent);
             margin-bottom: 28px;
         }
         .input-group { position: relative; margin-bottom: 16px; }
         .input-group svg {
             position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-            width: 18px; height: 18px; color: var(--text-muted); pointer-events: none;
+            width: 18px; height: 18px; color: var(--wood-main); pointer-events: none; opacity: 0.6;
         }
         .input-field {
-            width: 100%; padding: 14px 14px 14px 44px; background: rgba(255,255,255,0.04);
-            color: var(--text-light); border: 1px solid rgba(201,169,110,0.12); border-radius: 8px;
+            width: 100%; padding: 14px 14px 14px 44px; background: var(--bg-body);
+            color: var(--text-main); border: 1px solid var(--border-med); border-radius: 8px;
             font-family: 'Cormorant Garamond', serif; font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
-        .input-field::placeholder { color: var(--text-muted); opacity: 0.6; }
-        .input-field:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+        .input-field::placeholder { color: var(--text-muted); opacity: 0.8; }
+        .input-field:focus { outline: none; border-color: var(--wood-main); box-shadow: 0 0 0 3px var(--gold-dim); background: var(--bg-card); }
 
         .btn-primary {
             width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer;
             font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600;
-            background: linear-gradient(135deg, #252525, #1a1a1a);
-            color: var(--gold-light); letter-spacing: 0.5px;
-            border: 1px solid rgba(184,151,106,0.15);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, var(--wood-main), var(--wood-dark));
+            color: #ffffff; letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(74,52,36,0.2);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        .btn-primary:active { transform: scale(0.98); box-shadow: 0 2px 6px rgba(74,52,36,0.15); }
         .foutmelding { color: var(--danger); font-size: 14px; margin-top: 14px; display: none; }
 
         /* === APP SHELL === */
         #app-sectie { display: none; flex: 1; flex-direction: column; position: relative; z-index: 1; }
 
         header {
-            background: linear-gradient(to bottom, var(--oak-dark), var(--stone-dark));
+            background: var(--bg-card);
             text-align: center; padding: calc(16px + var(--safe-top)) 16px 14px;
-            position: relative; border-bottom: 1px solid rgba(201,169,110,0.1);
+            position: relative; border-bottom: 1px solid var(--border-dim);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
         header h1 {
-            font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold);
-            font-weight: 600; letter-spacing: 1px;
+            font-family: 'Playfair Display', serif; font-size: 22px; color: var(--wood-dark);
+            font-weight: 700; letter-spacing: 1px;
         }
-        header .subtitle { font-size: 12px; color: var(--text-muted); font-weight: 300; margin-top: 2px; letter-spacing: 2px; text-transform: uppercase; }
+        header .subtitle { font-size: 12px; color: var(--wood-main); font-weight: 600; margin-top: 2px; letter-spacing: 2px; text-transform: uppercase; }
         .uitlog-knop {
             position: absolute; right: 16px; top: calc(16px + var(--safe-top));
-            background: none; border: 1px solid rgba(201,169,110,0.2); color: var(--text-muted);
+            background: var(--bg-body); border: 1px solid var(--border-dim); color: var(--text-muted);
             padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px;
-            font-family: 'Cormorant Garamond', serif; transition: all 0.2s;
+            font-family: 'Cormorant Garamond', serif; transition: all 0.2s; font-weight: 600;
         }
-        .uitlog-knop:active { background: rgba(201,169,110,0.1); }
+        .uitlog-knop:active { background: var(--border-dim); }
 
         /* === BOTTOM NAV === */
         nav {
-            display: flex; background: linear-gradient(to top, var(--stone-dark), var(--stone));
-            border-top: 1px solid rgba(201,169,110,0.08);
+            display: flex; background: var(--bg-card);
+            border-top: 1px solid var(--border-dim);
             padding-bottom: var(--safe-bottom); position: sticky; bottom: 0; z-index: 10;
         }
         nav button {
@@ -153,13 +155,13 @@
             display: flex; flex-direction: column; align-items: center; gap: 4px;
             transition: all 0.2s; position: relative;
         }
-        nav button svg { width: 22px; height: 22px; color: var(--text-muted); transition: color 0.2s; }
-        nav button span { font-size: 11px; color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-weight: 500; transition: color 0.2s; }
-        nav button.actief svg { color: var(--gold); }
-        nav button.actief span { color: var(--gold); }
+        nav button svg { width: 22px; height: 22px; color: var(--text-muted); transition: color 0.2s; opacity: 0.7; }
+        nav button span { font-size: 11px; color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-weight: 600; transition: color 0.2s; }
+        nav button.actief svg { color: var(--wood-main); opacity: 1; }
+        nav button.actief span { color: var(--wood-dark); }
         nav button.actief::before {
             content: ''; position: absolute; top: 0; left: 25%; right: 25%;
-            height: 2px; background: var(--gold); border-radius: 0 0 2px 2px;
+            height: 2px; background: var(--wood-main); border-radius: 0 0 2px 2px;
         }
 
         /* === MAIN CONTENT === */
@@ -169,101 +171,90 @@
 
         /* === STATS BAR === */
         .stats-bar {
-            display: flex; gap: 8px; margin-bottom: 16px;
+            display: flex; gap: 8px; margin-bottom: 20px;
         }
         .stat-item {
-            flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(201,169,110,0.08);
-            border-radius: 10px; padding: 12px 8px; text-align: center;
+            flex: 1; background: var(--bg-card); border: 1px solid var(--border-dim);
+            border-radius: 10px; padding: 12px 8px; text-align: center; box-shadow: var(--shadow-sm);
         }
-        .stat-number { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); font-weight: 700; }
-        .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* === FILTER CONTROLS === */
-        .controls { display: flex; gap: 8px; margin-bottom: 16px; }
-        .controls select {
-            flex: 1; padding: 10px 12px; background: rgba(255,255,255,0.04);
-            color: var(--text-light); border: 1px solid rgba(201,169,110,0.12); border-radius: 8px;
-            font-family: 'Cormorant Garamond', serif; font-size: 15px;
-            -webkit-appearance: none; appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a96e' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 12px center;
-        }
-        .controls select:focus { outline: none; border-color: var(--gold); }
+        .stat-number { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--wood-dark); font-weight: 700; }
+        .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
 
         /* === WINE CARDS === */
         .wijn-kaart {
-            background: linear-gradient(145deg, var(--stone-card), rgba(36,20,20,0.8));
+            background: var(--bg-card);
             border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
-            border: 1px solid rgba(201,169,110,0.06);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-dim);
+            box-shadow: var(--shadow-sm);
             position: relative;
             animation: fadeInUp 0.4s ease backwards;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .wijn-kaart:active { transform: scale(0.99); }
+        .wijn-kaart:active { transform: scale(0.99); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .wijn-info { flex: 1; min-width: 0; }
         .wijn-kleur-indicator {
             display: inline-block; width: 8px; height: 8px; border-radius: 50%;
             margin-right: 6px; vertical-align: middle;
         }
-        .kleur-rood { background: #9b2335; box-shadow: 0 0 6px rgba(155,35,53,0.4); }
-        .kleur-wit { background: #e8dcc8; box-shadow: 0 0 6px rgba(232,220,200,0.3); }
-        .kleur-rose { background: #d4708f; box-shadow: 0 0 6px rgba(212,112,143,0.4); }
-        .kleur-champagne { background: #daa520; box-shadow: 0 0 6px rgba(218,165,32,0.4); }
+        .kleur-rood { background: #9b2335; box-shadow: 0 0 6px rgba(155,35,53,0.3); }
+        .kleur-wit { background: #e8dcc8; box-shadow: 0 0 6px rgba(232,220,200,0.8); }
+        .kleur-rose { background: #d4708f; box-shadow: 0 0 6px rgba(212,112,143,0.3); }
+        .kleur-champagne { background: #daa520; box-shadow: 0 0 6px rgba(218,165,32,0.3); }
         .kleur-anders { background: var(--text-muted); }
         .wijn-naam {
-            font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600;
-            color: var(--parchment); margin-bottom: 6px; line-height: 1.3;
+            font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700;
+            color: var(--text-main); margin-bottom: 6px; line-height: 1.3;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .wijn-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--text-muted); }
+        .wijn-meta { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--text-muted); font-weight: 500; }
         .wijn-meta-item { display: flex; align-items: center; gap: 4px; }
-        .wijn-meta-item svg { width: 14px; height: 14px; color: var(--gold); opacity: 0.6; flex-shrink: 0; }
+        .wijn-meta-item svg { width: 14px; height: 14px; color: var(--wood-light); opacity: 0.8; flex-shrink: 0; }
         .wijn-tag {
             display: inline-flex; align-items: center; gap: 4px;
-            background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.12);
-            padding: 3px 8px; border-radius: 20px; font-size: 11px; color: var(--gold-light);
-            margin-top: 8px;
+            background: var(--bg-body); border: 1px solid var(--border-med);
+            padding: 3px 8px; border-radius: 20px; font-size: 11px; color: var(--wood-dark);
+            margin-top: 8px; font-weight: 600;
         }
         .wijn-tag svg { width: 12px; height: 12px; }
         .verwijder-knop {
-            position: absolute; top: 12px; right: 12px; background: rgba(192,57,43,0.1);
-            border: none; color: var(--danger); width: 28px; height: 28px; border-radius: 6px;
+            position: absolute; top: 12px; right: 12px; background: var(--danger-bg);
+            border: 1px solid rgba(192,57,43,0.1); color: var(--danger); width: 28px; height: 28px; border-radius: 6px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s; opacity: 0.6;
+            transition: all 0.2s; opacity: 0.6;
         }
-        .verwijder-knop:active { background: rgba(192,57,43,0.25); opacity: 1; }
+        .verwijder-knop:active { background: rgba(192,57,43,0.2); opacity: 1; transform: scale(0.95); }
         .verwijder-knop svg { width: 16px; height: 16px; }
 
         /* === ADD FORM === */
         .form-section { margin-bottom: 20px; }
         .form-section label {
-            display: block; margin-bottom: 6px; color: var(--gold); font-size: 13px;
-            font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
+            display: block; margin-bottom: 6px; color: var(--wood-dark); font-size: 13px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
         }
         .form-section input, .form-section select {
-            width: 100%; padding: 13px 14px; background: rgba(255,255,255,0.04);
-            color: var(--text-light); border: 1px solid rgba(201,169,110,0.12); border-radius: 8px;
-            font-family: 'Cormorant Garamond', serif; font-size: 16px; transition: border-color 0.3s;
+            width: 100%; padding: 13px 14px; background: var(--bg-card);
+            color: var(--text-main); border: 1px solid var(--border-med); border-radius: 8px;
+            font-family: 'Cormorant Garamond', serif; font-size: 16px; transition: all 0.3s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
-        .form-section input::placeholder { color: var(--text-muted); opacity: 0.5; }
-        .form-section input:focus, .form-section select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+        .form-section input::placeholder { color: var(--text-muted); opacity: 0.6; }
+        .form-section input:focus, .form-section select:focus { outline: none; border-color: var(--wood-main); box-shadow: 0 0 0 3px var(--gold-dim); background: var(--bg-card); }
 
 
 
         .laad-scherm { text-align: center; color: var(--text-muted); margin-top: 60px; font-style: italic; font-size: 16px; }
         .laad-scherm .loader { animation: pulse 1.5s infinite; }
         .empty-state { text-align: center; margin-top: 60px; }
-        .empty-state svg { width: 48px; height: 48px; color: var(--text-muted); opacity: 0.2; margin-bottom: 12px; }
-        .empty-state p { color: var(--text-muted); font-size: 15px; }
+        .empty-state svg { width: 48px; height: 48px; color: var(--wood-light); opacity: 0.4; margin-bottom: 12px; }
+        .empty-state p { color: var(--text-muted); font-size: 15px; font-weight: 500; }
 
 
 
         /* Notificatie toast */
         .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px);
-            background: var(--oak-dark); color: var(--gold-light); padding: 12px 24px;
-            border-radius: 30px; font-size: 14px; border: 1px solid rgba(201,169,110,0.2);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 50; opacity: 0;
+            background: var(--text-main); color: #ffffff; padding: 12px 24px;
+            border-radius: 30px; font-size: 14px; border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: var(--shadow); z-index: 50; opacity: 0; font-weight: 600;
             transition: all 0.4s cubic-bezier(0.16,1,0.3,1); pointer-events: none;
         }
         .toast.toon { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -271,60 +262,61 @@
         /* === DETAIL MODAL === */
         .detail-modal {
             display: none; position: fixed; inset: 0; z-index: 90;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(42, 34, 27, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             justify-content: flex-end; align-items: stretch; flex-direction: column;
         }
         .detail-modal.actief { display: flex; animation: fadeIn 0.2s ease; }
         .detail-overlay { flex: 1; }
         .detail-sheet {
-            background: linear-gradient(to bottom, #1c1c1c, #0e0e0e);
+            background: var(--bg-body);
             border-radius: 20px 20px 0 0; padding: 24px 20px calc(24px + var(--safe-bottom));
             max-height: 85vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
-            border-top: 1px solid rgba(184,151,106,0.12);
+            border-top: 1px solid var(--border-dim);
             animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .detail-handle {
-            width: 36px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px;
+            width: 36px; height: 4px; background: var(--border-med); border-radius: 2px;
             margin: 0 auto 20px;
         }
         .detail-header { display: flex; gap: 14px; margin-bottom: 20px; }
         .detail-title {
-            font-family: 'Playfair Display', serif; font-size: 22px; color: var(--parchment);
-            font-weight: 600; margin-bottom: 4px;
+            font-family: 'Playfair Display', serif; font-size: 22px; color: var(--wood-dark);
+            font-weight: 700; margin-bottom: 4px;
         }
-        .detail-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
+        .detail-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
         .detail-info-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px;
         }
         .detail-info-item {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.08);
-            border-radius: 10px; padding: 12px; text-align: center;
+            background: var(--bg-card); border: 1px solid var(--border-dim);
+            border-radius: 10px; padding: 12px; text-align: center; box-shadow: var(--shadow-sm);
         }
-        .detail-info-value { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); font-weight: 600; }
-        .detail-info-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .detail-info-value { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--wood-main); font-weight: 600; }
+        .detail-info-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; font-weight: 600; }
 
         /* Quantity controls */
         .detail-section { margin-bottom: 20px; }
         .detail-section-title {
-            font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px;
-            margin-bottom: 10px; font-weight: 500;
+            font-size: 12px; color: var(--wood-dark); text-transform: uppercase; letter-spacing: 1.5px;
+            margin-bottom: 10px; font-weight: 600;
         }
         .qty-controls {
             display: flex; align-items: center; justify-content: center; gap: 20px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.1);
-            border-radius: 12px; padding: 12px;
+            background: var(--bg-card); border: 1px solid var(--border-dim);
+            border-radius: 12px; padding: 12px; box-shadow: var(--shadow-sm);
         }
         .qty-btn {
-            width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(184,151,106,0.2);
-            background: rgba(255,255,255,0.04); color: var(--gold); font-size: 20px;
+            width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-med);
+            background: var(--bg-body); color: var(--wood-dark); font-size: 20px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             transition: all 0.2s; font-family: 'Cormorant Garamond', serif;
         }
-        .qty-btn:active { background: rgba(184,151,106,0.15); transform: scale(0.95); }
+        .qty-btn:active { background: var(--border-dim); transform: scale(0.95); }
         .qty-value {
-            font-family: 'Playfair Display', serif; font-size: 28px; color: var(--parchment);
-            min-width: 40px; text-align: center;
+            font-family: 'Playfair Display', serif; font-size: 28px; color: var(--text-main);
+            min-width: 40px; text-align: center; font-weight: 600;
         }
 
         .detail-actions { display: flex; gap: 10px; margin-top: 8px; }
@@ -333,8 +325,8 @@
             font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .btn-detail-save {
-            background: linear-gradient(135deg, #252525, #1a1a1a); color: var(--gold-light);
-            border: 1px solid rgba(184,151,106,0.2);
+            background: linear-gradient(135deg, var(--wood-main), var(--wood-dark)); color: #fff;
+            border: 1px solid rgba(0,0,0,0.1); box-shadow: var(--shadow-sm);
         }
         .btn-detail-save:active { transform: scale(0.98); }
 
@@ -345,101 +337,101 @@
             font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .btn-opgedronken {
-            background: rgba(184,151,106,0.1); color: var(--gold-light);
-            border: 1px solid rgba(184,151,106,0.2);
+            background: var(--bg-card); color: var(--wood-main);
+            border: 1px solid var(--border-med); box-shadow: var(--shadow-sm);
         }
-        .btn-opgedronken:active { background: rgba(184,151,106,0.2); }
+        .btn-opgedronken:active { background: var(--border-dim); }
         .btn-echt-verwijderen {
-            background: rgba(139,58,58,0.1); color: var(--danger);
-            border: 1px solid rgba(139,58,58,0.2);
+            background: var(--danger-bg); color: var(--danger);
+            border: 1px solid rgba(192,57,43,0.2);
         }
-        .btn-echt-verwijderen:active { background: rgba(139,58,58,0.2); }
+        .btn-echt-verwijderen:active { background: rgba(192,57,43,0.15); }
 
         /* Review modal */
         .review-modal {
             display: none; position: fixed; inset: 0; z-index: 95;
-            background: rgba(0,0,0,0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            background: rgba(42, 34, 27, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
             justify-content: center; align-items: center; padding: 20px;
         }
         .review-modal.actief { display: flex; animation: fadeIn 0.2s ease; }
         .review-sheet {
-            background: linear-gradient(to bottom, #1c1c1c, #0e0e0e);
+            background: var(--bg-body);
             border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 340px;
-            border: 1px solid rgba(184,151,106,0.12);
+            border: 1px solid var(--border-dim); box-shadow: var(--shadow);
             animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
         }
         .review-title {
-            font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold);
-            text-align: center; margin-bottom: 20px;
+            font-family: 'Playfair Display', serif; font-size: 20px; color: var(--wood-dark);
+            text-align: center; margin-bottom: 20px; font-weight: 700;
         }
         .review-score-wrap { text-align: center; margin-bottom: 20px; }
-        .review-score-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .review-score-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600;}
         .review-score-display {
-            font-family: 'Playfair Display', serif; font-size: 48px; color: var(--gold); font-weight: 700;
+            font-family: 'Playfair Display', serif; font-size: 48px; color: var(--wood-dark); font-weight: 700;
         }
         .review-score-slider {
-            width: 100%; margin-top: 8px; accent-color: var(--gold);
+            width: 100%; margin-top: 8px; accent-color: var(--wood-main);
             -webkit-appearance: none; appearance: none; height: 4px;
-            background: rgba(184,151,106,0.2); border-radius: 2px; outline: none;
+            background: var(--border-med); border-radius: 2px; outline: none;
         }
         .review-score-slider::-webkit-slider-thumb {
             -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%;
-            background: var(--gold); cursor: pointer;
+            background: var(--wood-main); cursor: pointer; box-shadow: var(--shadow-sm);
         }
         .review-notitie {
-            width: 100%; padding: 12px; background: rgba(255,255,255,0.04);
-            color: var(--text-light); border: 1px solid rgba(184,151,106,0.12); border-radius: 8px;
+            width: 100%; padding: 12px; background: var(--bg-card);
+            color: var(--text-main); border: 1px solid var(--border-med); border-radius: 8px;
             font-family: 'Cormorant Garamond', serif; font-size: 15px; resize: vertical;
-            min-height: 70px; margin-bottom: 16px;
+            min-height: 70px; margin-bottom: 16px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
         }
-        .review-notitie::placeholder { color: var(--text-muted); opacity: 0.5; }
-        .review-notitie:focus { outline: none; border-color: var(--gold); }
+        .review-notitie::placeholder { color: var(--text-muted); opacity: 0.6; }
+        .review-notitie:focus { outline: none; border-color: var(--wood-main); }
         .review-actions { display: flex; gap: 10px; }
         .review-actions button {
             flex: 1; padding: 13px; border-radius: 10px; font-family: 'Playfair Display', serif;
             font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .btn-review-skip {
-            background: rgba(255,255,255,0.04); color: var(--text-muted);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: var(--bg-card); color: var(--text-muted);
+            border: 1px solid var(--border-med);
         }
         .btn-review-submit {
-            background: linear-gradient(135deg, #252525, #1a1a1a); color: var(--gold-light);
-            border: 1px solid rgba(184,151,106,0.2);
+            background: linear-gradient(135deg, var(--wood-main), var(--wood-dark)); color: #fff;
+            border: 1px solid rgba(0,0,0,0.1); box-shadow: var(--shadow-sm);
         }
 
         /* Collapsible accordion */
         .kleur-groep { margin-bottom: 10px; }
         .kleur-groep-header {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 16px; background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(184,151,106,0.08); border-radius: 10px;
+            padding: 14px 16px; background: var(--bg-card);
+            border: 1px solid var(--border-dim); border-radius: 10px; box-shadow: var(--shadow-sm);
             cursor: pointer; transition: all 0.2s; user-select: none;
         }
-        .kleur-groep-header:active { background: rgba(184,151,106,0.06); }
-        .kleur-groep-header.open { border-radius: 10px 10px 0 0; border-bottom: none; }
+        .kleur-groep-header:active { background: var(--bg-body); }
+        .kleur-groep-header.open { border-radius: 10px 10px 0 0; border-bottom: none; box-shadow: none; border: 1px solid var(--border-dim); }
         .kleur-groep-left { display: flex; align-items: center; gap: 10px; }
         .kleur-groep-dot {
             width: 10px; height: 10px; border-radius: 50;
         }
         .kleur-groep-naam {
-            font-family: 'Playfair Display', serif; font-size: 16px; color: var(--parchment); font-weight: 600;
+            font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text-main); font-weight: 700;
         }
         .kleur-groep-count {
-            font-family: 'Playfair Display', serif; font-size: 15px; color: var(--gold); font-weight: 600;
+            font-family: 'Playfair Display', serif; font-size: 15px; color: var(--wood-main); font-weight: 700;
             display: flex; align-items: center; gap: 6px;
         }
         .kleur-groep-chevron {
-            width: 16px; height: 16px; color: var(--text-muted); transition: transform 0.3s;
+            width: 16px; height: 16px; color: var(--wood-light); transition: transform 0.3s;
         }
-        .kleur-groep-header.open .kleur-groep-chevron { transform: rotate(180deg); }
+        .kleur-groep-header.open .kleur-groep-chevron { transform: rotate(180deg); color: var(--wood-main); }
         .kleur-groep-body {
-            display: none; padding: 8px 0 0; border: 1px solid rgba(184,151,106,0.08);
+            display: none; padding: 0; border: 1px solid var(--border-dim);
             border-top: none; border-radius: 0 0 10px 10px;
-            background: rgba(255,255,255,0.01); padding: 8px;
+            background: var(--bg-body); padding: 8px;
         }
         .kleur-groep-body.open { display: block; }
-        .kleur-groep-body .wijn-kaart { margin-bottom: 8px; }
+        .kleur-groep-body .wijn-kaart { margin-bottom: 8px; box-shadow: none; border: 1px solid var(--border-med); }
         .kleur-groep-body .wijn-kaart:last-child { margin-bottom: 0; }
     </style>
 </head>
@@ -572,8 +564,8 @@
             <!-- GEDRONKEN -->
             <section id="scherm-gedronken" class="scherm">
                 <div style="text-align:center;margin-bottom:16px;">
-                    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin-bottom:4px;">Proefnotities</div>
-                    <div style="font-size:13px;color:var(--text-muted);">Wijnen die je hebt gedronken en beoordeeld</div>
+                    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--wood-dark);margin-bottom:4px;font-weight:700;">Proefnotities</div>
+                    <div style="font-size:13px;color:var(--text-muted);font-weight:500;">Wijnen die je hebt gedronken en beoordeeld</div>
                 </div>
                 <div id="gedronken-lijst"></div>
             </section>
