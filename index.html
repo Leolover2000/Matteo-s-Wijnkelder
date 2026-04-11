@@ -488,6 +488,39 @@
         </div>
     </div>
 
+    <!-- GEDRONKEN MODAL -->
+    <div class="detail-modal" id="gedronken-modal">
+        <div class="detail-overlay" id="gedronken-overlay"></div>
+        <div class="detail-sheet">
+            <div class="detail-handle"></div>
+            <div class="detail-header" style="justify-content:space-between">
+                <div>
+                    <div class="detail-title" id="gedronken-title"></div>
+                    <div class="detail-subtitle" id="gedronken-subtitle"></div>
+                </div>
+                <div id="gedronken-rating-box" style="text-align:right">
+                    <div style="font-family:'Playfair Display',serif;font-size:36px;color:var(--wood-dark);font-weight:700;line-height:1;" id="gedronken-rating">8</div>
+                    <div style="font-size:12px;color:var(--text-muted);font-weight:600;">/10</div>
+                </div>
+            </div>
+            <div class="detail-info-grid" id="gedronken-info-grid"></div>
+            <div class="detail-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <div class="detail-section-title" style="margin-bottom:0;">Proefnotitie</div>
+                    <button id="gedronken-edit-notitie" style="background:none; border:none; color:var(--wood-main); cursor:pointer; padding:4px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                    </button>
+                </div>
+                <div id="gedronken-notitie-display" style="background:var(--bg-card); border:1px solid var(--border-dim); border-radius:12px; padding:16px; font-style:italic; font-size:15px; min-height:80px; box-shadow:inset 0 2px 4px rgba(0,0,0,0.01); line-height:1.5;"></div>
+                
+                <div id="gedronken-notitie-edit-box" style="display:none; margin-top:10px;">
+                    <textarea id="gedronken-notitie-input" class="review-notitie" style="margin-bottom:8px; height:120px;"></textarea>
+                    <button class="btn-detail-save" style="width:100%" id="gedronken-notitie-save">Opslaan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
@@ -806,6 +839,67 @@
         } catch (e) { console.error(e); }
     });
 
+    // === GEDRONKEN MODAL ===
+    const gedronkenModal = document.getElementById('gedronken-modal');
+    document.getElementById('gedronken-overlay').addEventListener('click', () => gedronkenModal.classList.remove('actief'));
+    
+    let huidigeGedronkenId = null;
+
+    window.openGedronkenDetail = function(id) {
+        const wijn = wijnen.find(w => w.id === id);
+        if (!wijn) return;
+        huidigeGedronkenId = id;
+
+        document.getElementById('gedronken-title').textContent = wijn.naam;
+        const kleurTxt = wijn.kleur || '';
+        const jaarTxt = wijn.jaartal ? `\u2022 ${wijn.jaartal}` : '';
+        document.getElementById('gedronken-subtitle').textContent = `${kleurTxt} ${jaarTxt}`.trim();
+
+        document.getElementById('gedronken-rating').textContent = wijn.rating || '\u2014';
+
+        const datum = wijn.datumGedronken ? new Date(wijn.datumGedronken).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '\u2014';
+        const prijs = wijn.prijs > 0 ? `\u20ac${wijn.prijs.toFixed(2)}` : '\u2014';
+        
+        document.getElementById('gedronken-info-grid').innerHTML = `
+            <div class="detail-info-item"><div class="detail-info-value">${datum}</div><div class="detail-info-label">Gedronken op</div></div>
+            <div class="detail-info-item"><div class="detail-info-value">${prijs}</div><div class="detail-info-label">Prijs</div></div>
+        `;
+
+        document.getElementById('gedronken-notitie-display').textContent = wijn.notitie || 'Geen proefnotitie ingevoerd.';
+        document.getElementById('gedronken-notitie-display').style.display = 'block';
+        document.getElementById('gedronken-notitie-edit-box').style.display = 'none';
+
+        gedronkenModal.classList.add('actief');
+    };
+
+    document.getElementById('gedronken-edit-notitie').addEventListener('click', () => {
+        const wijn = wijnen.find(w => w.id === huidigeGedronkenId);
+        document.getElementById('gedronken-notitie-display').style.display = 'none';
+        document.getElementById('gedronken-notitie-input').value = wijn ? (wijn.notitie || '') : '';
+        document.getElementById('gedronken-notitie-edit-box').style.display = 'block';
+        document.getElementById('gedronken-notitie-input').focus();
+    });
+
+    document.getElementById('gedronken-notitie-save').addEventListener('click', async () => {
+        if (!huidigeGedronkenId) return;
+        const note = document.getElementById('gedronken-notitie-input').value;
+        const knop = document.getElementById('gedronken-notitie-save');
+        knop.innerText = "Opslaan..."; knop.disabled = true;
+        try {
+            await updateDoc(doc(db, 'wijnen', huidigeGedronkenId), { notitie: note });
+            document.getElementById('gedronken-notitie-display').textContent = note || 'Geen proefnotitie ingevoerd.';
+            document.getElementById('gedronken-notitie-display').style.display = 'block';
+            document.getElementById('gedronken-notitie-edit-box').style.display = 'none';
+            knop.innerText = "Opslaan"; knop.disabled = false;
+            haalWijnenOp();
+            toonToast('Notitie opgeslagen');
+        } catch(e) {
+            console.error(e);
+            toonToast('Opslaan mislukt');
+            knop.innerText = "Opslaan"; knop.disabled = false;
+        }
+    });
+
     // === DATABASE ===
     async function haalWijnenOp() {
         wijnLijst.innerHTML = '<div class="laad-scherm"><span class="loader">Flessen aan het tellen...</span></div>';
@@ -984,6 +1078,8 @@
             const k = document.createElement('div');
             k.className = 'wijn-kaart';
             k.style.animationDelay = `${i * 0.06}s`;
+            k.style.cursor = 'pointer';
+            k.onclick = () => openGedronkenDetail(wijn.id);
 
             const score = wijn.rating || '\u2014';
             const datum = wijn.datumGedronken ? new Date(wijn.datumGedronken).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
