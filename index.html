@@ -315,6 +315,106 @@
             transition: all 0.4s cubic-bezier(0.16,1,0.3,1); pointer-events: none;
         }
         .toast.toon { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* === DETAIL MODAL === */
+        .detail-modal {
+            display: none; position: fixed; inset: 0; z-index: 90;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            justify-content: flex-end; align-items: stretch; flex-direction: column;
+        }
+        .detail-modal.actief { display: flex; animation: fadeIn 0.2s ease; }
+        .detail-overlay { flex: 1; }
+        .detail-sheet {
+            background: linear-gradient(to bottom, #1c1c1c, #0e0e0e);
+            border-radius: 20px 20px 0 0; padding: 24px 20px calc(24px + var(--safe-bottom));
+            max-height: 85vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            border-top: 1px solid rgba(184,151,106,0.12);
+            animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .detail-handle {
+            width: 36px; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+        .detail-header { display: flex; gap: 14px; margin-bottom: 20px; }
+        .detail-foto {
+            width: 80px; height: 100px; border-radius: 10px; overflow: hidden; flex-shrink: 0;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .detail-foto img { width: 100%; height: 100%; object-fit: cover; }
+        .detail-foto svg { width: 32px; height: 32px; color: var(--text-muted); opacity: 0.3; }
+        .detail-title {
+            font-family: 'Playfair Display', serif; font-size: 22px; color: var(--parchment);
+            font-weight: 600; margin-bottom: 4px;
+        }
+        .detail-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
+        .detail-info-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px;
+        }
+        .detail-info-item {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.08);
+            border-radius: 10px; padding: 12px; text-align: center;
+        }
+        .detail-info-value { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); font-weight: 600; }
+        .detail-info-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+        /* Quantity controls */
+        .detail-section { margin-bottom: 20px; }
+        .detail-section-title {
+            font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px;
+            margin-bottom: 10px; font-weight: 500;
+        }
+        .qty-controls {
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.1);
+            border-radius: 12px; padding: 12px;
+        }
+        .qty-btn {
+            width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(184,151,106,0.2);
+            background: rgba(255,255,255,0.04); color: var(--gold); font-size: 20px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; font-family: 'Cormorant Garamond', serif;
+        }
+        .qty-btn:active { background: rgba(184,151,106,0.15); transform: scale(0.95); }
+        .qty-value {
+            font-family: 'Playfair Display', serif; font-size: 28px; color: var(--parchment);
+            min-width: 40px; text-align: center;
+        }
+
+        /* Star rating */
+        .star-rating { display: flex; justify-content: center; gap: 8px; padding: 12px; }
+        .star-btn {
+            background: none; border: none; cursor: pointer; padding: 4px;
+            transition: transform 0.2s;
+        }
+        .star-btn:active { transform: scale(1.2); }
+        .star-btn svg {
+            width: 32px; height: 32px; transition: all 0.2s;
+        }
+        .star-btn .star-empty { color: rgba(184,151,106,0.2); }
+        .star-btn .star-filled { color: var(--gold); display: none; }
+        .star-btn.active .star-empty { display: none; }
+        .star-btn.active .star-filled { display: block; }
+        .rating-label {
+            text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 6px;
+        }
+
+        .detail-actions { display: flex; gap: 10px; margin-top: 8px; }
+        .detail-actions button {
+            flex: 1; padding: 14px; border-radius: 10px; font-family: 'Playfair Display', serif;
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-detail-save {
+            background: linear-gradient(135deg, #252525, #1a1a1a); color: var(--gold-light);
+            border: 1px solid rgba(184,151,106,0.2);
+        }
+        .btn-detail-save:active { transform: scale(0.98); }
+        .btn-detail-delete {
+            background: rgba(139,58,58,0.1); color: var(--danger);
+            border: 1px solid rgba(139,58,58,0.2);
+        }
+        .btn-detail-delete:active { background: rgba(139,58,58,0.2); }
     </style>
 </head>
 <body>
@@ -323,6 +423,39 @@
     <div class="foto-modal" id="foto-modal">
         <button class="foto-modal-sluiten" id="foto-modal-sluiten">✕</button>
         <img id="foto-modal-img" src="" alt="Wijn foto">
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div class="detail-modal" id="detail-modal">
+        <div class="detail-overlay" id="detail-overlay"></div>
+        <div class="detail-sheet">
+            <div class="detail-handle"></div>
+            <div class="detail-header">
+                <div class="detail-foto" id="detail-foto"></div>
+                <div>
+                    <div class="detail-title" id="detail-title"></div>
+                    <div class="detail-subtitle" id="detail-subtitle"></div>
+                </div>
+            </div>
+            <div class="detail-info-grid" id="detail-info-grid"></div>
+            <div class="detail-section">
+                <div class="detail-section-title">Aantal flessen</div>
+                <div class="qty-controls">
+                    <button class="qty-btn" id="qty-min">−</button>
+                    <div class="qty-value" id="qty-value">1</div>
+                    <button class="qty-btn" id="qty-plus">+</button>
+                </div>
+            </div>
+            <div class="detail-section">
+                <div class="detail-section-title">Beoordeling</div>
+                <div class="star-rating" id="star-rating"></div>
+                <div class="rating-label" id="rating-label">Tik om te beoordelen</div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn-detail-delete" id="detail-delete">Verwijderen</button>
+                <button class="btn-detail-save" id="detail-save">Opslaan</button>
+            </div>
+        </div>
     </div>
 
     <!-- TOAST -->
@@ -454,7 +587,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
     const firebaseConfig = {
@@ -474,6 +607,9 @@
 
     let wijnen = [];
     let geselecteerdeFoto = null; // File object
+    let huidigeWijnId = null; // For detail modal
+    let huidigeAantal = 1;
+    let huidigeRating = 0;
 
     // UI Refs
     const loginSectie = document.getElementById('login-sectie');
@@ -568,10 +704,114 @@
     const fotoModal = document.getElementById('foto-modal');
     document.getElementById('foto-modal-sluiten').addEventListener('click', () => fotoModal.classList.remove('actief'));
     fotoModal.addEventListener('click', (e) => { if (e.target === fotoModal) fotoModal.classList.remove('actief'); });
-    window.openFotoModal = function(url) {
+    window.openFotoModal = function(url, e) {
+        if (e) e.stopPropagation();
         document.getElementById('foto-modal-img').src = url;
         fotoModal.classList.add('actief');
     };
+
+    // === DETAIL MODAL ===
+    const detailModal = document.getElementById('detail-modal');
+    document.getElementById('detail-overlay').addEventListener('click', () => detailModal.classList.remove('actief'));
+
+    // Build star buttons
+    const starContainer = document.getElementById('star-rating');
+    for (let i = 1; i <= 5; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'star-btn';
+        btn.dataset.value = i;
+        btn.innerHTML = `<svg class="star-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg class="star-filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+        btn.addEventListener('click', () => {
+            huidigeRating = i;
+            updateStarUI();
+        });
+        starContainer.appendChild(btn);
+    }
+
+    function updateStarUI() {
+        const labels = ['', 'Matig', 'Redelijk', 'Goed', 'Zeer goed', 'Uitstekend'];
+        document.querySelectorAll('.star-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.value) <= huidigeRating);
+        });
+        document.getElementById('rating-label').textContent = huidigeRating > 0 ? labels[huidigeRating] : 'Tik om te beoordelen';
+    }
+
+    // Qty buttons
+    document.getElementById('qty-plus').addEventListener('click', () => {
+        huidigeAantal++;
+        document.getElementById('qty-value').textContent = huidigeAantal;
+    });
+    document.getElementById('qty-min').addEventListener('click', () => {
+        if (huidigeAantal > 0) huidigeAantal--;
+        document.getElementById('qty-value').textContent = huidigeAantal;
+    });
+
+    // Open detail
+    window.openDetail = function(id) {
+        const wijn = wijnen.find(w => w.id === id);
+        if (!wijn) return;
+        huidigeWijnId = id;
+        huidigeAantal = wijn.aantal || 1;
+        huidigeRating = wijn.rating || 0;
+
+        document.getElementById('detail-title').textContent = wijn.naam;
+        const kleurTxt = wijn.kleur || '';
+        const jaarTxt = wijn.jaartal ? `• ${wijn.jaartal}` : '';
+        document.getElementById('detail-subtitle').textContent = `${kleurTxt} ${jaarTxt}`.trim();
+
+        // Photo
+        const fotoDiv = document.getElementById('detail-foto');
+        if (wijn.fotoUrl) {
+            fotoDiv.innerHTML = `<img src="${wijn.fotoUrl}" alt="${wijn.naam}">`;
+        } else {
+            fotoDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C12 2 9 8 9 12c0 1.66 1.34 3 3 3s3-1.34 3-3c0-4-3-10-3-10z"/><path d="M12 15v7M9 22h6"/></svg>`;
+        }
+
+        // Info grid
+        const grid = document.getElementById('detail-info-grid');
+        const prijs = wijn.prijs > 0 ? `\u20ac${wijn.prijs.toFixed(2)}` : '\u2014';
+        const smaak = wijn.smaakVanaf || '\u2014';
+        grid.innerHTML = `
+            <div class="detail-info-item"><div class="detail-info-value">${wijn.jaartal || '\u2014'}</div><div class="detail-info-label">Jaartal</div></div>
+            <div class="detail-info-item"><div class="detail-info-value">${prijs}</div><div class="detail-info-label">Prijs</div></div>
+            <div class="detail-info-item"><div class="detail-info-value">${wijn.kleur || '\u2014'}</div><div class="detail-info-label">Kleur</div></div>
+            <div class="detail-info-item"><div class="detail-info-value">${smaak}</div><div class="detail-info-label">Op smaak</div></div>
+        `;
+
+        document.getElementById('qty-value').textContent = huidigeAantal;
+        updateStarUI();
+        detailModal.classList.add('actief');
+    };
+
+    // Save detail
+    document.getElementById('detail-save').addEventListener('click', async () => {
+        if (!huidigeWijnId) return;
+        try {
+            await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
+                aantal: huidigeAantal,
+                rating: huidigeRating
+            });
+            detailModal.classList.remove('actief');
+            haalWijnenOp();
+            toonToast('Wijzigingen opgeslagen');
+        } catch (e) {
+            console.error(e);
+            toonToast('Opslaan mislukt');
+        }
+    });
+
+    // Delete from detail
+    document.getElementById('detail-delete').addEventListener('click', async () => {
+        if (!huidigeWijnId) return;
+        if (confirm('Heb je deze wijn opgedronken of wil je hem verwijderen?')) {
+            try {
+                await deleteDoc(doc(db, 'wijnen', huidigeWijnId));
+                detailModal.classList.remove('actief');
+                haalWijnenOp();
+                toonToast('Fles verwijderd');
+            } catch (e) { console.error(e); }
+        }
+    });
 
     // === DATABASE ===
     async function haalWijnenOp() {
@@ -700,13 +940,15 @@
             const smaak = wijn.smaakVanaf ? `Op smaak: ${wijn.smaakVanaf}` : '';
 
             const fotoHtml = wijn.fotoUrl
-                ? `<div class="wijn-foto-wrap" onclick="openFotoModal('${wijn.fotoUrl}')"><img src="${wijn.fotoUrl}" alt="${wijn.naam}" loading="lazy"></div>`
+                ? `<div class="wijn-foto-wrap" onclick="openFotoModal('${wijn.fotoUrl}', event)"><img src="${wijn.fotoUrl}" alt="${wijn.naam}" loading="lazy"></div>`
                 : `<div class="wijn-foto-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C12 2 9 8 9 12c0 1.66 1.34 3 3 3s3-1.34 3-3c0-4-3-10-3-10z"/><path d="M12 15v7M9 22h6"/></svg></div>`;
 
+            const ratingStars = wijn.rating ? '★'.repeat(wijn.rating) + '☆'.repeat(5 - wijn.rating) : '';
+
+            k.style.cursor = 'pointer';
+            k.addEventListener('click', () => openDetail(wijn.id));
+
             k.innerHTML = `
-                <button class="verwijder-knop" onclick="verwijderWijn('${wijn.id}')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
-                </button>
                 ${fotoHtml}
                 <div class="wijn-info">
                     <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
@@ -715,6 +957,7 @@
                         <span class="wijn-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"/><path d="M18 12a2 2 0 000 4h4v-4h-4z"/></svg>${aantal}×</span>
                         <span class="wijn-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>${prijs}</span>
                     </div>
+                    ${ratingStars ? `<div class="wijn-tag" style="color:var(--gold);border-color:rgba(184,151,106,0.2);">${ratingStars}</div>` : ''}
                     ${smaak ? `<div class="wijn-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${smaak}</div>` : ''}
                 </div>`;
             wijnLijst.appendChild(k);
