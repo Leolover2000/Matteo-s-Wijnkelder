@@ -196,18 +196,11 @@
             border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
             border: 1px solid rgba(201,169,110,0.06);
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            display: flex; gap: 14px; position: relative;
+            position: relative;
             animation: fadeInUp 0.4s ease backwards;
             transition: transform 0.2s;
         }
         .wijn-kaart:active { transform: scale(0.99); }
-        .wijn-foto-wrap {
-            width: 72px; height: 90px; border-radius: 8px; overflow: hidden; flex-shrink: 0;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(201,169,110,0.08);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .wijn-foto-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        .wijn-foto-wrap svg { width: 28px; height: 28px; color: var(--text-muted); opacity: 0.3; }
         .wijn-info { flex: 1; min-width: 0; }
         .wijn-kleur-indicator {
             display: inline-block; width: 8px; height: 8px; border-radius: 50%;
@@ -256,36 +249,7 @@
         .form-section input::placeholder { color: var(--text-muted); opacity: 0.5; }
         .form-section input:focus, .form-section select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
 
-        /* Photo upload area */
-        .foto-upload-area {
-            border: 2px dashed rgba(201,169,110,0.2); border-radius: var(--radius);
-            padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;
-            background: rgba(255,255,255,0.02);
-        }
-        .foto-upload-area:active { border-color: var(--gold); background: rgba(201,169,110,0.05); }
-        .foto-upload-area svg { width: 36px; height: 36px; color: var(--gold); opacity: 0.5; margin-bottom: 8px; }
-        .foto-upload-area p { color: var(--text-muted); font-size: 14px; }
-        .foto-upload-area small { color: var(--text-muted); opacity: 0.5; font-size: 12px; }
-        .foto-preview { position: relative; margin-top: 12px; display: none; }
-        .foto-preview img {
-            width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;
-            border: 1px solid rgba(201,169,110,0.1);
-        }
-        .foto-preview .remove-foto {
-            position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.7);
-            border: none; color: white; width: 28px; height: 28px; border-radius: 50%;
-            cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center;
-        }
-        .foto-buttons { display: flex; gap: 10px; margin-top: 10px; }
-        .foto-btn {
-            flex: 1; padding: 12px; background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(201,169,110,0.15); border-radius: 8px;
-            color: var(--text-light); cursor: pointer; display: flex; align-items: center;
-            justify-content: center; gap: 8px; font-family: 'Cormorant Garamond', serif;
-            font-size: 14px; transition: all 0.2s;
-        }
-        .foto-btn:active { background: rgba(201,169,110,0.1); border-color: var(--gold); }
-        .foto-btn svg { width: 20px; height: 20px; color: var(--gold); }
+
 
         .laad-scherm { text-align: center; color: var(--text-muted); margin-top: 60px; font-style: italic; font-size: 16px; }
         .laad-scherm .loader { animation: pulse 1.5s infinite; }
@@ -293,19 +257,7 @@
         .empty-state svg { width: 48px; height: 48px; color: var(--text-muted); opacity: 0.2; margin-bottom: 12px; }
         .empty-state p { color: var(--text-muted); font-size: 15px; }
 
-        /* Fullscreen photo modal */
-        .foto-modal {
-            display: none; position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.92);
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        .foto-modal.actief { display: flex; animation: fadeIn 0.2s ease; }
-        .foto-modal img { max-width: 100%; max-height: 90vh; border-radius: 8px; object-fit: contain; }
-        .foto-modal-sluiten {
-            position: absolute; top: calc(16px + var(--safe-top)); right: 16px;
-            background: rgba(255,255,255,0.1); border: none; color: white;
-            width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 20px;
-            display: flex; align-items: center; justify-content: center;
-        }
+
 
         /* Notificatie toast */
         .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(80px);
@@ -337,13 +289,6 @@
             margin: 0 auto 20px;
         }
         .detail-header { display: flex; gap: 14px; margin-bottom: 20px; }
-        .detail-foto {
-            width: 80px; height: 100px; border-radius: 10px; overflow: hidden; flex-shrink: 0;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(184,151,106,0.1);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .detail-foto img { width: 100%; height: 100%; object-fit: cover; }
-        .detail-foto svg { width: 32px; height: 32px; color: var(--text-muted); opacity: 0.3; }
         .detail-title {
             font-family: 'Playfair Display', serif; font-size: 22px; color: var(--parchment);
             font-weight: 600; margin-bottom: 4px;
@@ -419,11 +364,6 @@
 </head>
 <body>
 
-    <!-- FULLSCREEN PHOTO MODAL -->
-    <div class="foto-modal" id="foto-modal">
-        <button class="foto-modal-sluiten" id="foto-modal-sluiten">✕</button>
-        <img id="foto-modal-img" src="" alt="Wijn foto">
-    </div>
 
     <!-- DETAIL MODAL -->
     <div class="detail-modal" id="detail-modal">
@@ -431,7 +371,6 @@
         <div class="detail-sheet">
             <div class="detail-handle"></div>
             <div class="detail-header">
-                <div class="detail-foto" id="detail-foto"></div>
                 <div>
                     <div class="detail-title" id="detail-title"></div>
                     <div class="detail-subtitle" id="detail-subtitle"></div>
@@ -529,30 +468,7 @@
             <!-- TOEVOEGEN -->
             <section id="scherm-toevoegen" class="scherm">
                 <form id="toevoeg-formulier">
-                    <div class="form-section">
-                        <label>Foto</label>
-                        <div class="foto-upload-area" id="foto-upload-trigger">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="12" cy="12" r="3"/><path d="M2 16l5-5 4 4 3-3 8 8"/></svg>
-                            <p>Tik om een foto toe te voegen</p>
-                            <small>Camera of galerij</small>
-                        </div>
-                        <div class="foto-buttons">
-                            <button type="button" class="foto-btn" id="btn-camera">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                                Camera
-                            </button>
-                            <button type="button" class="foto-btn" id="btn-galerij">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-                                Galerij
-                            </button>
-                        </div>
-                        <div class="foto-preview" id="foto-preview">
-                            <img id="foto-preview-img" src="" alt="Preview">
-                            <button type="button" class="remove-foto" id="remove-foto">✕</button>
-                        </div>
-                        <input type="file" id="foto-camera-input" accept="image/*" capture="environment" style="display:none">
-                        <input type="file" id="foto-galerij-input" accept="image/*" style="display:none">
-                    </div>
+
                     <div class="form-section"><label>Naam van de wijn</label><input type="text" id="invoer-naam" placeholder="Bijv. Château Margaux 2015"></div>
                     <div class="form-section">
                         <label>Kleur</label>
@@ -569,6 +485,15 @@
                     <button type="submit" class="btn-primary" id="opslaan-knop">Opslaan in Kelder</button>
                 </form>
             </section>
+
+            <!-- GEDRONKEN -->
+            <section id="scherm-gedronken" class="scherm">
+                <div style="text-align:center;margin-bottom:16px;">
+                    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin-bottom:4px;">Proefnotities</div>
+                    <div style="font-size:13px;color:var(--text-muted);">Wijnen die je hebt gedronken en beoordeeld</div>
+                </div>
+                <div id="gedronken-lijst"></div>
+            </section>
         </main>
 
         <!-- BOTTOM NAV -->
@@ -576,6 +501,10 @@
             <button id="tab-kelder" class="actief">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10"/></svg>
                 <span>Kelder</span>
+            </button>
+            <button id="tab-gedronken">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l-1 7H9L8 2z"/><path d="M12 9v6"/><path d="M7 21h10"/><path d="M9 15h6"/></svg>
+                <span>Gedronken</span>
             </button>
             <button id="tab-toevoegen">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
@@ -588,7 +517,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyD8rkb6u4zVHQUBwKo0lfvhX17L5cz31I8",
@@ -603,10 +531,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     let wijnen = [];
-    let geselecteerdeFoto = null; // File object
     let huidigeWijnId = null; // For detail modal
     let huidigeAantal = 1;
     let huidigeRating = 0;
@@ -617,10 +543,6 @@
     const loginForm = document.getElementById('login-formulier');
     const loginFout = document.getElementById('login-fout');
     const wijnLijst = document.getElementById('wijn-lijst');
-    const fotoPreview = document.getElementById('foto-preview');
-    const fotoPreviewImg = document.getElementById('foto-preview-img');
-    const fotoCameraInput = document.getElementById('foto-camera-input');
-    const fotoGalerijInput = document.getElementById('foto-galerij-input');
 
     // === TOAST ===
     function toonToast(msg) {
@@ -655,60 +577,6 @@
     });
 
     document.getElementById('uitlog-knop').addEventListener('click', () => signOut(auth));
-
-    // === PHOTO HANDLING ===
-    async function compressImage(file, maxWidth = 800) {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    let w = img.width, h = img.height;
-                    if (w > maxWidth) { h = (maxWidth / w) * h; w = maxWidth; }
-                    canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.75);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
-    function handleFotoSelect(file) {
-        if (!file) return;
-        geselecteerdeFoto = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            fotoPreviewImg.src = e.target.result;
-            fotoPreview.style.display = 'block';
-            document.getElementById('foto-upload-trigger').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-    }
-
-    document.getElementById('btn-camera').addEventListener('click', () => fotoCameraInput.click());
-    document.getElementById('btn-galerij').addEventListener('click', () => fotoGalerijInput.click());
-    document.getElementById('foto-upload-trigger').addEventListener('click', () => fotoGalerijInput.click());
-    fotoCameraInput.addEventListener('change', (e) => handleFotoSelect(e.target.files[0]));
-    fotoGalerijInput.addEventListener('change', (e) => handleFotoSelect(e.target.files[0]));
-    document.getElementById('remove-foto').addEventListener('click', () => {
-        geselecteerdeFoto = null;
-        fotoPreview.style.display = 'none';
-        document.getElementById('foto-upload-trigger').style.display = '';
-        fotoCameraInput.value = ''; fotoGalerijInput.value = '';
-    });
-
-    // === PHOTO MODAL ===
-    const fotoModal = document.getElementById('foto-modal');
-    document.getElementById('foto-modal-sluiten').addEventListener('click', () => fotoModal.classList.remove('actief'));
-    fotoModal.addEventListener('click', (e) => { if (e.target === fotoModal) fotoModal.classList.remove('actief'); });
-    window.openFotoModal = function(url, e) {
-        if (e) e.stopPropagation();
-        document.getElementById('foto-modal-img').src = url;
-        fotoModal.classList.add('actief');
-    };
 
     // === DETAIL MODAL ===
     const detailModal = document.getElementById('detail-modal');
@@ -759,14 +627,6 @@
         const jaarTxt = wijn.jaartal ? `• ${wijn.jaartal}` : '';
         document.getElementById('detail-subtitle').textContent = `${kleurTxt} ${jaarTxt}`.trim();
 
-        // Photo
-        const fotoDiv = document.getElementById('detail-foto');
-        if (wijn.fotoUrl) {
-            fotoDiv.innerHTML = `<img src="${wijn.fotoUrl}" alt="${wijn.naam}">`;
-        } else {
-            fotoDiv.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C12 2 9 8 9 12c0 1.66 1.34 3 3 3s3-1.34 3-3c0-4-3-10-3-10z"/><path d="M12 15v7M9 22h6"/></svg>`;
-        }
-
         // Info grid
         const grid = document.getElementById('detail-info-grid');
         const prijs = wijn.prijs > 0 ? `\u20ac${wijn.prijs.toFixed(2)}` : '\u2014';
@@ -800,15 +660,29 @@
         }
     });
 
-    // Delete from detail
+    // Delete from detail — move to gedronken if rated, else fully delete
     document.getElementById('detail-delete').addEventListener('click', async () => {
         if (!huidigeWijnId) return;
-        if (confirm('Heb je deze wijn opgedronken of wil je hem verwijderen?')) {
+        const wijn = wijnen.find(w => w.id === huidigeWijnId);
+        const heeftRating = huidigeRating > 0 || (wijn && wijn.rating > 0);
+        const msg = heeftRating
+            ? 'Deze wijn wordt verplaatst naar "Gedronken" met je beoordeling. Doorgaan?'
+            : 'Deze wijn permanent verwijderen?';
+        if (confirm(msg)) {
             try {
-                await deleteDoc(doc(db, 'wijnen', huidigeWijnId));
+                if (heeftRating) {
+                    await updateDoc(doc(db, 'wijnen', huidigeWijnId), {
+                        gedronken: true,
+                        rating: huidigeRating || wijn.rating,
+                        datumGedronken: new Date().toISOString()
+                    });
+                    toonToast('Verplaatst naar Gedronken');
+                } else {
+                    await deleteDoc(doc(db, 'wijnen', huidigeWijnId));
+                    toonToast('Fles verwijderd');
+                }
                 detailModal.classList.remove('actief');
                 haalWijnenOp();
-                toonToast('Fles verwijderd');
             } catch (e) { console.error(e); }
         }
     });
@@ -821,6 +695,7 @@
             const snap = await getDocs(collection(db, "wijnen"));
             snap.forEach((d) => wijnen.push({ id: d.id, ...d.data() }));
             tekenWijnen();
+            tekenGedronken();
             updateStats();
         } catch (e) {
             console.error("Fout:", e);
@@ -829,10 +704,11 @@
     }
 
     function updateStats() {
-        const totaalFlessen = wijnen.reduce((sum, w) => sum + (w.aantal || 1), 0);
+        const kelderWijnen = wijnen.filter(w => !w.gedronken);
+        const totaalFlessen = kelderWijnen.reduce((sum, w) => sum + (w.aantal || 1), 0);
         document.getElementById('stat-totaal').textContent = totaalFlessen;
-        document.getElementById('stat-rood').textContent = wijnen.filter(w => w.kleur === 'Rood').reduce((s, w) => s + (w.aantal || 1), 0);
-        document.getElementById('stat-wit').textContent = wijnen.filter(w => w.kleur === 'Wit').reduce((s, w) => s + (w.aantal || 1), 0);
+        document.getElementById('stat-rood').textContent = kelderWijnen.filter(w => w.kleur === 'Rood').reduce((s, w) => s + (w.aantal || 1), 0);
+        document.getElementById('stat-wit').textContent = kelderWijnen.filter(w => w.kleur === 'Wit').reduce((s, w) => s + (w.aantal || 1), 0);
     }
 
     // ADD WINE
@@ -841,20 +717,6 @@
         const knop = document.getElementById('opslaan-knop');
         knop.innerText = "Opslaan..."; knop.disabled = true;
 
-        let fotoUrl = '';
-        if (geselecteerdeFoto) {
-            try {
-                const compressed = await compressImage(geselecteerdeFoto);
-                const ts = Date.now();
-                const fileRef = storageRef(storage, `wijnen/${auth.currentUser.uid}/${ts}.jpg`);
-                await uploadBytes(fileRef, compressed);
-                fotoUrl = await getDownloadURL(fileRef);
-            } catch (err) {
-                console.error("Foto upload fout:", err);
-                toonToast("Foto kon niet worden geüpload");
-            }
-        }
-
         const nieuweWijn = {
             naam: document.getElementById('invoer-naam').value || 'Onbekende Wijn',
             kleur: document.getElementById('invoer-kleur').value,
@@ -862,15 +724,13 @@
             aantal: parseInt(document.getElementById('invoer-aantal').value) || 1,
             prijs: parseFloat(document.getElementById('invoer-prijs').value) || 0,
             smaakVanaf: document.getElementById('invoer-smaak').value,
-            fotoUrl: fotoUrl,
+            gedronken: false,
             datumToegevoegd: new Date().toISOString()
         };
 
         try {
             await addDoc(collection(db, "wijnen"), nieuweWijn);
             document.getElementById('toevoeg-formulier').reset();
-            geselecteerdeFoto = null; fotoPreview.style.display = 'none';
-            document.getElementById('foto-upload-trigger').style.display = '';
             wisselScherm('kelder');
             haalWijnenOp();
             toonToast("Fles toegevoegd aan de kelder");
@@ -881,17 +741,6 @@
         knop.innerText = "Opslaan in Kelder"; knop.disabled = false;
     });
 
-    // DELETE
-    window.verwijderWijn = async function(id) {
-        if (confirm("Heb je deze wijn opgedronken of wil je hem verwijderen?")) {
-            try {
-                await deleteDoc(doc(db, "wijnen", id));
-                haalWijnenOp();
-                toonToast("Fles verwijderd");
-            } catch (e) { console.error(e); }
-        }
-    };
-
     // === TABS ===
     function wisselScherm(naam) {
         document.querySelectorAll('.scherm').forEach(s => s.classList.remove('actief'));
@@ -900,6 +749,7 @@
         document.getElementById('tab-' + naam).classList.add('actief');
     }
     document.getElementById('tab-kelder').addEventListener('click', () => wisselScherm('kelder'));
+    document.getElementById('tab-gedronken').addEventListener('click', () => wisselScherm('gedronken'));
     document.getElementById('tab-toevoegen').addEventListener('click', () => wisselScherm('toevoegen'));
 
     // === RENDER WINES ===
@@ -913,7 +763,8 @@
         const sorteerOptie = document.getElementById('sorteer-optie').value;
         wijnLijst.innerHTML = '';
 
-        let lijst = filterKleur !== 'Alle' ? wijnen.filter(w => w.kleur === filterKleur) : [...wijnen];
+        let lijst = wijnen.filter(w => !w.gedronken);
+        if (filterKleur !== 'Alle') lijst = lijst.filter(w => w.kleur === filterKleur);
 
         lijst.sort((a, b) => {
             if (sorteerOptie === 'prijs-hoog') return (b.prijs||0) - (a.prijs||0);
@@ -938,18 +789,12 @@
             const jaar = wijn.jaartal || '—';
             const aantal = wijn.aantal || 1;
             const smaak = wijn.smaakVanaf ? `Op smaak: ${wijn.smaakVanaf}` : '';
-
-            const fotoHtml = wijn.fotoUrl
-                ? `<div class="wijn-foto-wrap" onclick="openFotoModal('${wijn.fotoUrl}', event)"><img src="${wijn.fotoUrl}" alt="${wijn.naam}" loading="lazy"></div>`
-                : `<div class="wijn-foto-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 2C12 2 9 8 9 12c0 1.66 1.34 3 3 3s3-1.34 3-3c0-4-3-10-3-10z"/><path d="M12 15v7M9 22h6"/></svg></div>`;
-
             const ratingStars = wijn.rating ? '★'.repeat(wijn.rating) + '☆'.repeat(5 - wijn.rating) : '';
 
             k.style.cursor = 'pointer';
             k.addEventListener('click', () => openDetail(wijn.id));
 
             k.innerHTML = `
-                ${fotoHtml}
                 <div class="wijn-info">
                     <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
                     <div class="wijn-meta">
@@ -963,6 +808,61 @@
             wijnLijst.appendChild(k);
         });
     }
+
+    // === RENDER GEDRONKEN ===
+    function tekenGedronken() {
+        const lijst = wijnen.filter(w => w.gedronken).sort((a, b) => {
+            return new Date(b.datumGedronken || b.datumToegevoegd) - new Date(a.datumGedronken || a.datumToegevoegd);
+        });
+        const container = document.getElementById('gedronken-lijst');
+        container.innerHTML = '';
+
+        if (lijst.length === 0) {
+            container.innerHTML = `<div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M8 2h8l-1 7H9L8 2z"/><path d="M12 9v6"/><path d="M7 21h10"/><path d="M9 15h6"/></svg>
+                <p>Nog geen wijnen gedronken</p></div>`;
+            return;
+        }
+
+        lijst.forEach((wijn, i) => {
+            const k = document.createElement('div');
+            k.className = 'wijn-kaart';
+            k.style.animationDelay = `${i * 0.06}s`;
+            k.style.cursor = 'pointer';
+
+            const stars = wijn.rating ? '★'.repeat(wijn.rating) + '☆'.repeat(5 - wijn.rating) : 'Geen beoordeling';
+            const labels = ['', 'Matig', 'Redelijk', 'Goed', 'Zeer goed', 'Uitstekend'];
+            const label = wijn.rating ? labels[wijn.rating] : '';
+            const datum = wijn.datumGedronken ? new Date(wijn.datumGedronken).toLocaleDateString('nl-NL', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+            k.innerHTML = `
+                <div class="wijn-info">
+                    <div class="wijn-naam"><span class="wijn-kleur-indicator ${kleurClass(wijn.kleur)}"></span>${wijn.naam}</div>
+                    <div style="color:var(--gold);font-size:16px;letter-spacing:2px;margin:6px 0;">${stars}</div>
+                    <div class="wijn-meta">
+                        ${label ? `<span class="wijn-meta-item" style="color:var(--gold-light);">${label}</span>` : ''}
+                        ${wijn.kleur ? `<span class="wijn-meta-item">${wijn.kleur}</span>` : ''}
+                        ${wijn.jaartal ? `<span class="wijn-meta-item">${wijn.jaartal}</span>` : ''}
+                        ${datum ? `<span class="wijn-meta-item">${datum}</span>` : ''}
+                    </div>
+                </div>
+                <button class="verwijder-knop" style="position:absolute;top:12px;right:12px;background:rgba(192,57,43,0.1);border:none;color:var(--danger);width:28px;height:28px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.6;" onclick="event.stopPropagation();verwijderGedronken('${wijn.id}')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+                </button>`;
+            container.appendChild(k);
+        });
+    }
+
+    // Permanently delete from gedronken
+    window.verwijderGedronken = async function(id) {
+        if (confirm('Deze beoordeling permanent verwijderen?')) {
+            try {
+                await deleteDoc(doc(db, 'wijnen', id));
+                haalWijnenOp();
+                toonToast('Beoordeling verwijderd');
+            } catch (e) { console.error(e); }
+        }
+    };
 
     document.getElementById('filter-kleur').addEventListener('change', tekenWijnen);
     document.getElementById('sorteer-optie').addEventListener('change', tekenWijnen);
